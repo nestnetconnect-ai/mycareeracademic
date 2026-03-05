@@ -1516,5 +1516,20 @@
     });
   }
 </script>
+  <script>
+  fetch('content.json')
+    .then(r => r.json())
+    .then(data => {
+      document.querySelectorAll('.logo-badge img').forEach(el => el.src = data.logo);
+      const heroImg = document.querySelector('.hero-img-circle img');
+      if(heroImg) heroImg.src = data.hero_image;
+      document.querySelectorAll('.logo-abbr').forEach(el => el.textContent = data.institute_name);
+      document.querySelectorAll('.logo-full').forEach(el => el.textContent = data.tagline);
+      const heroTitle = document.querySelector('.hero-title');
+      if(heroTitle) heroTitle.innerHTML = data.hero_title;
+      const heroSub = document.querySelector('.hero-sub');
+      if(heroSub) heroSub.textContent = data.hero_subtitle;
+    });
+</script>
 </body>
 </html>
