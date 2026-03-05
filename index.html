@@ -159,9 +159,10 @@
       color: var(--primary);
       cursor: pointer;
       margin-right: auto;
+      flex-wrap: nowrap;
     }
     .logo-badge {
-    width: 48px; height: 48px;
+    width: 70px; height: 70px;
     border-radius: 10px;
     overflow: hidden;
     flex-shrink: 0;
@@ -173,7 +174,7 @@
   object-fit: contain;
 }
     }
-    .logo-text { display: flex; flex-direction: column; line-height: 1; }
+    .logo-text { display: flex; flex-direction: column; line-height: 1; justify-content: center; }
     .logo-abbr { font-size: 1.1rem; color: var(--primary); white-space: nowrap; }
     .logo-full { font-size: 0.55rem; font-weight: 600; color: var(--text-light); letter-spacing: 1px; text-transform: uppercase; }
     .nav-links {
