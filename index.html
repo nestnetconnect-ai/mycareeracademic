@@ -1332,20 +1332,28 @@
 <!-- ===== JAVASCRIPT ===== -->
 <script>
   /* ===== DATA STORES ===== */
-  let admissions = [
-    { name: 'Rahul Mohapatra', parent: 'Suresh Mohapatra', phone: '9876543210', cls: 'Class 11', stream: 'Science (PCM)', status: 'new' },
-    { name: 'Priya Sahu', parent: 'Ramesh Sahu', phone: '9876543211', cls: 'Class 11', stream: 'Commerce', status: 'reviewed' },
-    { name: 'Amit Kumar Panda', parent: 'Bijay Panda', phone: '9876543212', cls: 'Class 12', stream: 'Science (PCB)', status: 'enrolled' },
-  ];
-  let counsellings = [
-    { name: 'Sona Jena', parent: 'Krushna Jena', phone: '9876543213', stream: 'Not Sure', date: '2026-03-10', status: 'new' },
-  ];
+let admissions = [];
+let counsellings = [];
+
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbz7GdAe3RikhM3yPpQwN_VKXLGQg_I4mZ0Yx-C5DUHVLRcoKY4CuhIoMoiMuLZhSnz-/exec';
+
+function loadSheetData() {
+  fetch(SHEET_URL)
+    .then(r => r.json())
+    .then(data => {
+      admissions = data.admissions || [];
+      counsellings = data.counsellings || [];
+      renderAdminTables();
+    }).catch(() => {
+      console.log('Sheet data load failed');
+    });
+}
 
   /* ===== PAGE NAVIGATION ===== */
   function showSection(page) {
     document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
     document.getElementById('main-' + page).classList.add('active');
-    if (page === 'admin') renderAdminTables();
+    if (page === 'admin') loadSheetData();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
