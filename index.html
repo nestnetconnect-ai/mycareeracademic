@@ -1338,14 +1338,14 @@ let counsellings = [];
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbz7GdAe3RikhM3yPpQwN_VKXLGQg_I4mZ0Yx-C5DUHVLRcoKY4CuhIoMoiMuLZhSnz-/exec';
 
 function loadSheetData() {
-  fetch(SHEET_URL)
+  fetch(SHEET_URL, {mode: 'cors'})
     .then(r => r.json())
     .then(data => {
       admissions = data.admissions || [];
       counsellings = data.counsellings || [];
       renderAdminTables();
-    }).catch(() => {
-      console.log('Sheet data load failed');
+    }).catch((err) => {
+      console.log('Sheet data load failed', err);
     });
 }
 
