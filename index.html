@@ -1476,24 +1476,32 @@
 }
 
   function submitAdmission() {
-    const name = document.getElementById('a_name').value.trim();
-    const parent = document.getElementById('a_parent').value.trim();
-    const phone = document.getElementById('a_phone').value.trim();
-    const cls = document.getElementById('a_class').value;
-    const stream = document.getElementById('a_stream').value;
-    const dob = document.getElementById('a_dob').value;
-    const address = document.getElementById('a_address').value.trim();
+  const name = document.getElementById('a_name').value.trim();
+  const parent = document.getElementById('a_parent').value.trim();
+  const phone = document.getElementById('a_phone').value.trim();
+  const cls = document.getElementById('a_class').value;
+  const stream = document.getElementById('a_stream').value;
+  const dob = document.getElementById('a_dob').value;
+  const address = document.getElementById('a_address').value.trim();
 
-    if (!name || !parent || !phone || !cls || !stream) return showToast('⚠️ Please fill all required fields.', true);
-    if (!/^\d{10}$/.test(phone.replace(/\s/g,''))) return showToast('⚠️ Enter a valid 10-digit mobile number.', true);
+  if (!name || !parent || !phone || !cls || !stream) return showToast('⚠️ Please fill all required fields.', true);
+  if (!/^\d{10}$/.test(phone.replace(/\s/g,''))) return showToast('⚠️ Enter a valid 10-digit mobile number.', true);
 
-    admissions.push({ name, parent, phone, cls, stream, dob, address, status: 'new' });
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwXPAc2Uz7aI8G6JvXENycGF1Er9Aqb727Nd3vZZXqR3yEQ1cZ2A_8hOeSddffKezib/exec';
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ type: 'admission', name, parent, phone, cls, stream, dob, address })
+  }).then(() => {
     showToast('🎓 Application submitted! Our team will contact you within 24 hours.');
     ['a_name','a_parent','a_phone','a_address'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('a_class').value = '';
     document.getElementById('a_stream').value = '';
     document.getElementById('a_dob').value = '';
-  }
+  }).catch(() => {
+    showToast('❌ Something went wrong. Please try again.', true);
+  });
+}
 
   /* ===== ADMIN TABLE RENDER ===== */
   function renderAdminTables() {
