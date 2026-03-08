@@ -1338,7 +1338,8 @@ let counsellings = [];
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbz7GdAe3RikhM3yPpQwN_VKXLGQg_I4mZ0Yx-C5DUHVLRcoKY4CuhIoMoiMuLZhSnz-/exec';
 
 function loadSheetData() {
-  fetch(SHEET_URL + '?t=' + Date.now(), {redirect: 'follow'})
+  const url = 'https://script.google.com/macros/s/AKfycbz7GdAe3RikhM3yPpQwN_VKXLGQg_I4mZ0Yx-C5DUHVLRcoKY4CuhIoMoiMuLZhSnz-/exec?t=' + Date.now();
+  fetch(url, {redirect: 'follow'})
     .then(r => r.json())
     .then(data => {
       admissions = data.admissions || [];
