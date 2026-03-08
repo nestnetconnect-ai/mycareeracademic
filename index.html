@@ -1449,23 +1449,31 @@
 
   /* ===== FORM SUBMISSIONS ===== */
   function submitCounselling() {
-    const name = document.getElementById('c_name').value.trim();
-    const parent = document.getElementById('c_parent').value.trim();
-    const phone = document.getElementById('c_phone').value.trim();
-    const cls = document.getElementById('c_class').value;
-    const stream = document.getElementById('c_stream').value;
-    const date = document.getElementById('c_date').value;
+  const name = document.getElementById('c_name').value.trim();
+  const parent = document.getElementById('c_parent').value.trim();
+  const phone = document.getElementById('c_phone').value.trim();
+  const cls = document.getElementById('c_class').value;
+  const stream = document.getElementById('c_stream').value;
+  const date = document.getElementById('c_date').value;
 
-    if (!name || !parent || !phone) return showToast('⚠️ Please fill all required fields.', true);
-    if (!/^\d{10}$/.test(phone.replace(/\s/g,''))) return showToast('⚠️ Enter a valid 10-digit phone number.', true);
+  if (!name || !parent || !phone) return showToast('⚠️ Please fill all required fields.', true);
+  if (!/^\d{10}$/.test(phone.replace(/\s/g,''))) return showToast('⚠️ Enter a valid 10-digit phone number.', true);
 
-    counsellings.push({ name, parent, phone, cls, stream, date, status: 'new' });
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwXPAc2Uz7aI8G6JvXENycGF1Er9Aqb727Nd3vZZXqR3yEQ1cZ2A_8hOeSddffKezib/exec';
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ type: 'counselling', name, parent, phone, cls, stream, date })
+  }).then(() => {
     showToast('✅ Counselling booked! We will call you within 24 hours.');
     ['c_name','c_parent','c_phone'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('c_class').value = '';
     document.getElementById('c_stream').value = '';
     document.getElementById('c_date').value = '';
-  }
+  }).catch(() => {
+    showToast('❌ Something went wrong. Please try again.', true);
+  });
+}
 
   function submitAdmission() {
     const name = document.getElementById('a_name').value.trim();
