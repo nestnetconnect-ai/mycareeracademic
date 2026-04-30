@@ -4,224 +4,544 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MCA Admin Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --primary: #0A3D62; --secondary: #27AE60; --accent: #F39C12;
-      --bg: #f0f4f8; --white: #ffffff; --danger: #e74c3c;
-      --text: #1a2634; --text-light: #5a6a7a;
-      --shadow: 0 4px 24px rgba(10,61,98,0.10); --radius: 14px;
+      --primary: #0A3D62; --primary-light: #154f7a; --primary-dark: #062d4a;
+      --secondary: #27AE60; --secondary-light: #2ecc71;
+      --accent: #F39C12; --danger: #e74c3c;
+      --bg: #f0f4f8; --white: #fff; --text: #1a2634; --text-light: #5a6a7a;
+      --border: #dde6ef; --radius: 14px; --shadow: 0 4px 24px rgba(10,61,98,0.10);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    h1,h2,h3 { font-family: 'Montserrat', sans-serif; }
 
-    #login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary), #154f7a); }
-    .login-box { background: white; border-radius: 20px; padding: 48px 40px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); text-align: center; }
-    .login-logo { width: 80px; height: 80px; border-radius: 16px; object-fit: contain; margin: 0 auto 16px; display: block; }
-    .login-box h2 { font-size: 1.5rem; color: var(--primary); margin-bottom: 4px; }
-    .login-box p { color: var(--text-light); font-size: 0.85rem; margin-bottom: 28px; }
-    .login-box input { width: 100%; padding: 12px 16px; border: 2px solid #e0e8f0; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.9rem; margin-bottom: 14px; outline: none; transition: border 0.2s; }
-    .login-box input:focus { border-color: var(--primary); }
-    .login-btn { width: 100%; padding: 13px; background: linear-gradient(135deg, var(--primary), #154f7a); color: white; border: none; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; }
-    .login-error { color: var(--danger); font-size: 0.82rem; margin-top: 10px; display: none; }
+    /* LOGIN */
+    #login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--primary-dark),var(--primary)); }
+    .login-box { background:white; border-radius:20px; padding:48px 40px; width:100%; max-width:400px; box-shadow:0 20px 60px rgba(0,0,0,0.2); text-align:center; }
+    .login-logo { width:80px; height:80px; border-radius:16px; object-fit:contain; margin:0 auto 16px; display:block; background:#f4f7fb; padding:4px; }
+    .login-box h2 { font-size:1.5rem; color:var(--primary); margin-bottom:4px; }
+    .login-box p { color:var(--text-light); font-size:0.85rem; margin-bottom:28px; }
+    .login-input { width:100%; padding:13px 16px; border:2px solid var(--border); border-radius:10px; font-family:'Poppins',sans-serif; font-size:0.9rem; margin-bottom:14px; outline:none; transition:border 0.2s; }
+    .login-input:focus { border-color:var(--primary); }
+    .login-btn { width:100%; padding:14px; background:linear-gradient(135deg,var(--primary),var(--primary-light)); color:white; border:none; border-radius:10px; font-family:'Poppins',sans-serif; font-size:0.95rem; font-weight:700; cursor:pointer; }
+    .login-error { color:var(--danger); font-size:0.82rem; margin-top:10px; display:none; }
 
-    #admin-panel { display: none; }
-    .topbar { background: var(--primary); color: white; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 12px rgba(10,61,98,0.2); position: sticky; top: 0; z-index: 100; }
-    .topbar-left { display: flex; align-items: center; gap: 12px; }
-    .topbar-logo { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; background: white; padding: 2px; }
-    .topbar h1 { font-size: 1.1rem; font-weight: 700; }
-    .topbar span { font-size: 0.75rem; opacity: 0.7; }
-    .topbar-right { display: flex; gap: 10px; align-items: center; }
-    .preview-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 0.82rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
-    .logout-btn { background: rgba(231,76,60,0.3); border: 1px solid rgba(231,76,60,0.5); color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 0.82rem; font-weight: 600; }
+    /* LAYOUT */
+    #admin-panel { display:none; min-height:100vh; }
+    .topbar { background:var(--primary); color:white; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:200; box-shadow:0 2px 16px rgba(10,61,98,0.3); }
+    .topbar-left { display:flex; align-items:center; gap:12px; }
+    .topbar-logo { width:38px; height:38px; border-radius:8px; background:white; padding:2px; object-fit:contain; }
+    .topbar-title { font-size:1rem; font-weight:800; }
+    .topbar-sub { font-size:0.72rem; opacity:0.65; display:block; }
+    .topbar-right { display:flex; gap:10px; align-items:center; }
+    .top-btn { padding:8px 16px; border-radius:50px; font-family:'Poppins',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; border:none; transition:all 0.2s; display:inline-flex; align-items:center; gap:6px; text-decoration:none; }
+    .top-btn-ghost { background:rgba(255,255,255,0.12); color:white; border:1px solid rgba(255,255,255,0.25); }
+    .top-btn-ghost:hover { background:rgba(255,255,255,0.22); }
+    .top-btn-danger { background:rgba(231,76,60,0.25); color:#ffb3a7; border:1px solid rgba(231,76,60,0.4); }
 
-    .main-content { max-width: 960px; margin: 32px auto; padding: 0 20px 80px; }
+    .layout { display:flex; min-height:calc(100vh - 64px); }
+    .sidebar { width:220px; background:white; border-right:2px solid var(--border); flex-shrink:0; padding:20px 12px; position:sticky; top:64px; height:calc(100vh - 64px); overflow-y:auto; }
+    .sidebar-section { margin-bottom:8px; }
+    .sidebar-label { font-size:0.65rem; font-weight:800; color:var(--text-light); text-transform:uppercase; letter-spacing:1.5px; padding:0 10px; margin-bottom:6px; margin-top:14px; display:block; }
+    .nav-item { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; font-size:0.83rem; font-weight:600; color:var(--text-light); cursor:pointer; transition:all 0.2s; border:none; background:none; width:100%; text-align:left; }
+    .nav-item:hover { background:var(--bg); color:var(--primary); }
+    .nav-item.active { background:linear-gradient(135deg,rgba(10,61,98,0.08),rgba(39,174,96,0.06)); color:var(--primary); font-weight:700; }
+    .nav-item .nav-icon { font-size:1rem; width:22px; text-align:center; }
 
-    .tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
-    .tab-btn { padding: 10px 18px; border-radius: 50px; border: 2px solid #dde6ef; background: white; color: var(--text-light); font-family: 'Poppins', sans-serif; font-size: 0.83rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-    .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-    .tab-section { display: none; }
-    .tab-section.active { display: block; }
+    .main { flex:1; padding:28px; overflow-y:auto; }
+    .page { display:none; }
+    .page.active { display:block; }
 
-    .card { background: white; border-radius: var(--radius); padding: 28px; margin-bottom: 20px; box-shadow: var(--shadow); }
-    .card h3 { font-size: 1rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    /* CARDS */
+    .card { background:white; border-radius:var(--radius); padding:24px; margin-bottom:20px; box-shadow:var(--shadow); }
+    .card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding-bottom:14px; border-bottom:2px solid var(--bg); }
+    .card-title { font-size:1rem; color:var(--primary); font-weight:700; display:flex; align-items:center; gap:8px; }
 
-    .form-group { margin-bottom: 18px; }
-    .form-group label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--text-light); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 11px 14px; border: 2px solid #e0e8f0; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.9rem; outline: none; transition: border 0.2s; color: var(--text); }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--primary); }
-    .form-group textarea { min-height: 75px; resize: vertical; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    /* FORMS */
+    .form-group { margin-bottom:16px; }
+    .form-group label { display:block; font-size:0.75rem; font-weight:700; color:var(--text-light); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width:100%; padding:11px 14px; border:2px solid var(--border); border-radius:10px;
+      font-family:'Poppins',sans-serif; font-size:0.88rem; outline:none; color:var(--text);
+      transition:border 0.2s; background:white;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color:var(--primary); background:#fafcff; }
+    .form-group textarea { min-height:75px; resize:vertical; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-row-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+    .form-row-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; }
 
-    .save-btn { background: linear-gradient(135deg, var(--secondary), #2ecc71); color: white; border: none; padding: 12px 28px; border-radius: 50px; font-family: 'Poppins', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 16px rgba(39,174,96,0.3); display: inline-flex; align-items: center; gap: 8px; }
-    .save-btn:hover { transform: translateY(-2px); }
-    .save-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    .add-btn { background: linear-gradient(135deg, var(--primary), #154f7a); color: white; border: none; padding: 10px 22px; border-radius: 50px; font-family: 'Poppins', sans-serif; font-size: 0.83rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 16px; }
-    .del-btn { background: #fdf0ee; color: var(--danger); border: 1px solid #f5bfb8; padding: 6px 14px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+    /* BUTTONS */
+    .save-btn { background:linear-gradient(135deg,var(--secondary),var(--secondary-light)); color:white; border:none; padding:11px 28px; border-radius:50px; font-family:'Poppins',sans-serif; font-size:0.85rem; font-weight:700; cursor:pointer; box-shadow:0 4px 16px rgba(39,174,96,0.3); display:inline-flex; align-items:center; gap:8px; transition:all 0.2s; }
+    .save-btn:hover { transform:translateY(-2px); }
+    .save-btn:disabled { opacity:0.55; cursor:not-allowed; transform:none; }
+    .add-btn { background:linear-gradient(135deg,var(--primary),var(--primary-light)); color:white; border:none; padding:9px 20px; border-radius:50px; font-family:'Poppins',sans-serif; font-size:0.8rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:all 0.2s; }
+    .add-btn:hover { transform:translateY(-1px); }
+    .del-btn { background:#fff0ee; color:var(--danger); border:1px solid #fcc; padding:6px 12px; border-radius:8px; font-family:'Poppins',sans-serif; font-size:0.75rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+    .del-btn:hover { background:var(--danger); color:white; }
+    .move-btn { background:var(--bg); color:var(--text-light); border:1px solid var(--border); padding:5px 9px; border-radius:6px; font-size:0.78rem; cursor:pointer; transition:all 0.2s; }
+    .move-btn:hover { background:var(--primary); color:white; }
 
-    .item-card { border: 2px solid #e8f0f8; border-radius: 12px; padding: 18px; margin-bottom: 14px; background: #fafcff; }
-    .item-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-    .item-card-header span { font-weight: 700; color: var(--primary); font-size: 0.9rem; }
+    /* ITEM CARDS */
+    .item-card { border:2px solid var(--border); border-radius:12px; padding:18px; margin-bottom:14px; background:#fafcff; transition:border 0.2s; }
+    .item-card:hover { border-color:rgba(10,61,98,0.2); }
+    .item-card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+    .item-label { font-weight:700; color:var(--primary); font-size:0.88rem; display:flex; align-items:center; gap:6px; }
+    .item-actions { display:flex; gap:6px; }
 
-    .notice-item { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
-    .notice-item input { flex: 1; }
+    /* STATUS */
+    .status-bar { padding:12px 18px; border-radius:10px; font-size:0.83rem; font-weight:600; margin-top:14px; display:none; }
+    .status-bar.success { background:#e8f8ee; color:#1a7a3a; border:1px solid #a8e6bc; display:flex; align-items:center; gap:8px; }
+    .status-bar.error { background:#fdf0ee; color:#a02020; border:1px solid #f5bfb8; display:flex; align-items:center; gap:8px; }
+    .status-bar.loading { background:#e8f0fb; color:#1a3a7a; border:1px solid #b0c8f0; display:flex; align-items:center; gap:8px; }
+    .spin { animation:spin 0.8s linear infinite; display:inline-block; }
+    @keyframes spin { to{transform:rotate(360deg);} }
 
-    .status-bar { padding: 12px 18px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; margin-top: 16px; display: none; }
-    .status-bar.success { background: #e8f8ee; color: #1a7a3a; border: 1px solid #a8e6bc; display: block; }
-    .status-bar.error { background: #fdf0ee; color: #a02020; border: 1px solid #f5bfb8; display: block; }
-    .status-bar.loading { background: #e8f0fb; color: #1a3a7a; border: 1px solid #b0c8f0; display: block; }
+    /* TIP */
+    .tip-box { background:#fff8e8; border:1px solid #f5d88a; border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:0.8rem; color:#7a5a10; display:flex; gap:8px; }
 
-    .tip-box { background: #fff8e8; border: 1px solid #f5d88a; border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; font-size: 0.82rem; color: #7a5a10; }
+    /* DASHBOARD STATS */
+    .dash-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px; }
+    .dash-stat { background:white; border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); text-align:center; }
+    .dash-num { font-size:1.8rem; font-weight:900; color:var(--primary); font-family:'Montserrat',sans-serif; display:block; }
+    .dash-label { font-size:0.78rem; color:var(--text-light); margin-top:4px; }
+    .dash-icon { font-size:1.5rem; margin-bottom:8px; display:block; }
 
-    @media (max-width: 640px) {
-      .form-row, .form-row-3 { grid-template-columns: 1fr; }
-      .topbar { padding: 14px 16px; }
-      .tabs { gap: 6px; }
-      .tab-btn { padding: 8px 12px; font-size: 0.78rem; }
+    /* SUBMISSIONS TABLE */
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; font-size:0.83rem; }
+    thead th { background:var(--bg); padding:12px 16px; text-align:left; font-size:0.72rem; font-weight:800; color:var(--text-light); text-transform:uppercase; letter-spacing:0.8px; }
+    tbody td { padding:14px 16px; border-bottom:1px solid var(--bg); vertical-align:middle; }
+    tbody tr:last-child td { border-bottom:none; }
+    tbody tr:hover td { background:rgba(244,247,251,0.8); }
+    .badge { padding:3px 10px; border-radius:50px; font-size:0.7rem; font-weight:700; display:inline-block; }
+    .badge-new { background:#fff3cd; color:#856404; }
+    .badge-reviewed { background:#d1f5e0; color:#155724; }
+    .badge-enrolled { background:#cce5ff; color:#004085; }
+    .badge-pending { background:#fdf0ee; color:#721c24; }
+    .empty-td { text-align:center; color:var(--text-light); padding:40px !important; font-style:italic; }
+    .table-search { padding:9px 14px; border:2px solid var(--border); border-radius:10px; font-family:'Poppins',sans-serif; font-size:0.83rem; outline:none; width:240px; }
+    .table-search:focus { border-color:var(--primary); }
+
+    /* COLOR PREVIEW */
+    .color-preview { display:inline-block; width:20px; height:20px; border-radius:4px; border:2px solid rgba(0,0,0,0.1); vertical-align:middle; margin-right:6px; }
+
+    /* PREVIEW IFRAME */
+    .preview-wrap { border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); background:white; }
+    .preview-bar { background:var(--primary); padding:10px 16px; display:flex; align-items:center; gap:8px; }
+    .preview-dot { width:10px; height:10px; border-radius:50%; }
+    .preview-dot.r { background:#ff5f57; }
+    .preview-dot.y { background:#ffbd2e; }
+    .preview-dot.g { background:#28c840; }
+    .preview-url { flex:1; background:rgba(255,255,255,0.12); border-radius:6px; padding:4px 12px; font-size:0.75rem; color:rgba(255,255,255,0.7); }
+    .preview-iframe { width:100%; height:580px; border:none; }
+
+    @media (max-width:768px) {
+      .sidebar { display:none; }
+      .dash-stats { grid-template-columns:1fr 1fr; }
+      .form-row, .form-row-3, .form-row-4 { grid-template-columns:1fr; }
     }
   </style>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <img src="Logo.png" alt="MCA" class="login-logo" onerror="this.style.display='none'">
     <h2>MCA Admin Panel</h2>
-    <p>Website content manage karne ke liye login karo</p>
-    <input type="password" id="admin-password" placeholder="Admin Password daalo" />
-    <button class="login-btn" onclick="doLogin()">🔐 Login Karo</button>
+    <p>Website manage karne ke liye login karo</p>
+    <input type="password" class="login-input" id="pwd" placeholder="🔑 Password daalo" />
+    <button class="login-btn" onclick="doLogin()">Login Karo →</button>
     <p class="login-error" id="login-error">❌ Galat password! Dobara try karo.</p>
   </div>
 </div>
 
+<!-- ADMIN PANEL -->
 <div id="admin-panel">
   <div class="topbar">
     <div class="topbar-left">
-      <img src="Logo.png" alt="Logo" class="topbar-logo" onerror="this.style.display='none'">
-      <div><h1>MCA Admin Panel</h1><span>My Career Academic — Website Manager</span></div>
+      <img src="Logo.png" alt="" class="topbar-logo" onerror="this.style.display='none'">
+      <div>
+        <div class="topbar-title">MCA Admin Panel</div>
+        <span class="topbar-sub">My Career Academic — Website Manager</span>
+      </div>
     </div>
     <div class="topbar-right">
-      <a href="https://nestnetconnect-ai.github.io/mycareeracademic/" target="_blank" class="preview-btn">🌐 Live Website</a>
-      <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
+      <a href="index.html" target="_blank" class="top-btn top-btn-ghost">🌐 Live Website</a>
+      <button class="top-btn top-btn-danger" onclick="doLogout()">🚪 Logout</button>
     </div>
   </div>
 
-  <div class="main-content">
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('basic',this)">🏠 Basic Info</button>
-      <button class="tab-btn" onclick="switchTab('images',this)">🖼️ Images</button>
-      <button class="tab-btn" onclick="switchTab('contact',this)">📞 Contact</button>
-      <button class="tab-btn" onclick="switchTab('notice',this)">📢 Notice Bar</button>
-      <button class="tab-btn" onclick="switchTab('faculty',this)">👨‍🏫 Faculty</button>
-      <button class="tab-btn" onclick="switchTab('courses',this)">📚 Courses</button>
-      <button class="tab-btn" onclick="switchTab('gallery',this)">🖼️ Gallery</button>
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <span class="sidebar-label">Dashboard</span>
+      <button class="nav-item active" onclick="showPage('dashboard', this)"><span class="nav-icon">📊</span> Dashboard</button>
+
+      <span class="sidebar-label">Website Content</span>
+      <button class="nav-item" onclick="showPage('basic', this)"><span class="nav-icon">🏠</span> Basic Info</button>
+      <button class="nav-item" onclick="showPage('hero', this)"><span class="nav-icon">🎯</span> Hero Section</button>
+      <button class="nav-item" onclick="showPage('notices', this)"><span class="nav-icon">📢</span> Notice Bar</button>
+      <button class="nav-item" onclick="showPage('whychoose', this)"><span class="nav-icon">✅</span> Why Choose Us</button>
+      <button class="nav-item" onclick="showPage('courses', this)"><span class="nav-icon">📚</span> Courses</button>
+      <button class="nav-item" onclick="showPage('summer', this)"><span class="nav-icon">☀️</span> Summer Section</button>
+      <button class="nav-item" onclick="showPage('faculty', this)"><span class="nav-icon">👨‍🏫</span> Faculty</button>
+      <button class="nav-item" onclick="showPage('testimonials', this)"><span class="nav-icon">💬</span> Testimonials</button>
+      <button class="nav-item" onclick="showPage('achievements', this)"><span class="nav-icon">🏆</span> Achievements</button>
+      <button class="nav-item" onclick="showPage('gallery', this)"><span class="nav-icon">🖼️</span> Gallery</button>
+      <button class="nav-item" onclick="showPage('contact', this)"><span class="nav-icon">📞</span> Contact Info</button>
+      <button class="nav-item" onclick="showPage('footer', this)"><span class="nav-icon">🦶</span> Footer & Social</button>
+      <button class="nav-item" onclick="showPage('seo', this)"><span class="nav-icon">🔍</span> SEO Settings</button>
+
+      <span class="sidebar-label">Applications</span>
+      <button class="nav-item" onclick="showPage('admissions', this)"><span class="nav-icon">🎓</span> Admissions</button>
+      <button class="nav-item" onclick="showPage('counsellings', this)"><span class="nav-icon">📋</span> Counsellings</button>
+
+      <span class="sidebar-label">Tools</span>
+      <button class="nav-item" onclick="showPage('preview', this)"><span class="nav-icon">👁️</span> Preview Site</button>
     </div>
 
-    <!-- BASIC INFO -->
-    <div class="tab-section active" id="tab-basic">
-      <div class="card">
-        <h3>🏫 Institute Basic Information</h3>
-        <div class="form-row">
-          <div class="form-group"><label>Institute Name</label><input type="text" id="institute_name" /></div>
-          <div class="form-group"><label>Tagline (Navbar ke neeche)</label><input type="text" id="tagline" /></div>
+    <!-- MAIN CONTENT -->
+    <div class="main" id="main-content">
+
+      <!-- DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <h2 style="margin-bottom:6px;color:var(--primary);">👋 Welcome to Admin Panel</h2>
+        <p style="color:var(--text-light);margin-bottom:24px;font-size:0.88rem;">Yahan se apni website ka pura control rakho</p>
+        <div class="dash-stats">
+          <div class="dash-stat"><span class="dash-icon">🎓</span><span class="dash-num" id="d-admissions">0</span><div class="dash-label">Total Admissions</div></div>
+          <div class="dash-stat"><span class="dash-icon">📋</span><span class="dash-num" id="d-counsellings">0</span><div class="dash-label">Counselling Bookings</div></div>
+          <div class="dash-stat"><span class="dash-icon">✅</span><span class="dash-num" id="d-sections">0</span><div class="dash-label">Content Sections</div></div>
+          <div class="dash-stat"><span class="dash-icon">🌐</span><span class="dash-num">Live</span><div class="dash-label">Website Status</div></div>
         </div>
-        <div class="form-group"><label>Hero Title (Main Heading)</label><textarea id="hero_title"></textarea></div>
-        <div class="form-group"><label>Hero Subtitle</label><textarea id="hero_subtitle"></textarea></div>
-        <button class="save-btn" onclick="saveAll('basic')">💾 Save Basic Info</button>
-        <div class="status-bar" id="status-basic"></div>
-      </div>
-    </div>
-
-    <!-- IMAGES -->
-    <div class="tab-section" id="tab-images">
-      <div class="card">
-        <h3>🖼️ Logo & Hero Image</h3>
-        <div class="tip-box">💡 <strong>Tip:</strong> Pehle GitHub repo mein image upload karo, phir file ka naam yahan likho (jaise: Logo.png, hero.png)</div>
-        <div class="form-row">
-          <div class="form-group"><label>Logo File Name</label><input type="text" id="logo" placeholder="Logo.png" /></div>
-          <div class="form-group"><label>Hero Image File Name</label><input type="text" id="hero_image" placeholder="hero.png" /></div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">📝 Quick Guide</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="background:var(--bg);border-radius:10px;padding:16px;">
+              <strong style="color:var(--primary);font-size:0.85rem;">✏️ Content Kaise Edit Karein?</strong>
+              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">Sidebar mein jo section edit karna hai usmein jao, changes karo aur "Save" button dabao. 2-3 minutes mein website update ho jayegi.</p>
+            </div>
+            <div style="background:var(--bg);border-radius:10px;padding:16px;">
+              <strong style="color:var(--primary);font-size:0.85rem;">🖼️ Images Kaise Add Karein?</strong>
+              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">GitHub repo mein image upload karo (same folder mein). Phir Gallery ya Images section mein sirf file ka naam likho jaise: campus.jpg</p>
+            </div>
+            <div style="background:var(--bg);border-radius:10px;padding:16px;">
+              <strong style="color:var(--primary);font-size:0.85rem;">📱 Applications Kahan Milenge?</strong>
+              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">Sidebar mein "Admissions" aur "Counsellings" section mein Google Sheet se data load hota hai. Refresh karne ke liye page reload karo.</p>
+            </div>
+            <div style="background:var(--bg);border-radius:10px;padding:16px;">
+              <strong style="color:var(--primary);font-size:0.85rem;">🔑 Password Change Karein?</strong>
+              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">admin.html file mein ADMIN_PASSWORD variable dhundho aur apna naya password set karo.</p>
+            </div>
+          </div>
         </div>
-        <button class="save-btn" onclick="saveAll('images')">💾 Save Images</button>
-        <div class="status-bar" id="status-images"></div>
       </div>
-    </div>
 
-    <!-- CONTACT -->
-    <div class="tab-section" id="tab-contact">
-      <div class="card">
-        <h3>📞 Contact Information</h3>
-        <div class="form-group"><label>Address</label><input type="text" id="address" /></div>
-        <div class="form-row">
-          <div class="form-group"><label>Phone 1 (Mobile)</label><input type="text" id="phone1" /></div>
-          <div class="form-group"><label>Phone 2 (Landline)</label><input type="text" id="phone2" /></div>
+      <!-- BASIC INFO -->
+      <div class="page" id="page-basic">
+        <div class="card">
+          <div class="card-header"><span class="card-title">🏫 Basic Institute Information</span></div>
+          <div class="form-row">
+            <div class="form-group"><label>Institute Name</label><input type="text" id="f_institute_name" /></div>
+            <div class="form-group"><label>Short Name / Abbreviation</label><input type="text" id="f_short_name" /></div>
+          </div>
+          <div class="form-group"><label>Tagline (Navbar ke neeche dikhega)</label><input type="text" id="f_tagline" /></div>
+          <button class="save-btn" onclick="saveSection('basic')">💾 Save Basic Info</button>
+          <div class="status-bar" id="s-basic"></div>
         </div>
-        <div class="form-row">
-          <div class="form-group"><label>Email</label><input type="text" id="email" /></div>
-          <div class="form-group"><label>Timings</label><input type="text" id="timings" /></div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">🖼️ Logo & Hero Image</span></div>
+          <div class="tip-box">💡 <strong>Tip:</strong> Pehle GitHub repo mein image file upload karo, phir yahan sirf file ka naam likho (jaise: Logo.png, hero.png)</div>
+          <div class="form-row">
+            <div class="form-group"><label>Logo File Name</label><input type="text" id="f_logo" placeholder="Logo.png" /></div>
+            <div class="form-group"><label>Hero Image File Name</label><input type="text" id="f_hero_image" placeholder="hero.png" /></div>
+          </div>
+          <button class="save-btn" onclick="saveSection('images')">💾 Save Images</button>
+          <div class="status-bar" id="s-images"></div>
         </div>
-        <button class="save-btn" onclick="saveAll('contact')">💾 Save Contact</button>
-        <div class="status-bar" id="status-contact"></div>
       </div>
-    </div>
 
-    <!-- NOTICE BAR -->
-    <div class="tab-section" id="tab-notice">
-      <div class="card">
-        <h3>📢 Notice Bar Messages</h3>
-        <p style="font-size:0.83rem;color:var(--text-light);margin-bottom:16px;">Ye messages website ke upar scrolling bar mein dikhenge.</p>
-        <div id="notice-list"></div>
-        <button class="add-btn" onclick="addNotice()">➕ Naya Notice Add Karo</button><br>
-        <button class="save-btn" onclick="saveAll('notice')">💾 Save Notices</button>
-        <div class="status-bar" id="status-notice"></div>
+      <!-- HERO SECTION -->
+      <div class="page" id="page-hero">
+        <div class="card">
+          <div class="card-header"><span class="card-title">🎯 Hero Section</span></div>
+          <div class="form-group"><label>Badge Text (top mein)</label><input type="text" id="f_hero_badge" /></div>
+          <div class="form-group"><label>Main Title (HTML allowed, jaise &lt;span&gt;highlighted&lt;/span&gt;)</label><textarea id="f_hero_title"></textarea></div>
+          <div class="form-group"><label>Subtitle</label><textarea id="f_hero_subtitle" style="min-height:60px;"></textarea></div>
+          <div class="form-row">
+            <div class="form-group"><label>Button 1 Text</label><input type="text" id="f_hero_btn1" /></div>
+            <div class="form-group"><label>Button 2 Text</label><input type="text" id="f_hero_btn2" /></div>
+          </div>
+          <button class="save-btn" onclick="saveSection('hero')">💾 Save Hero</button>
+          <div class="status-bar" id="s-hero"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📊 Hero Stats (3 numbers)</span>
+            <button class="add-btn" onclick="addHeroStat()">➕ Add Stat</button>
+          </div>
+          <div id="hero-stats-list"></div>
+          <button class="save-btn" onclick="saveSection('hero-stats')">💾 Save Stats</button>
+          <div class="status-bar" id="s-hero-stats"></div>
+        </div>
       </div>
-    </div>
 
-    <!-- FACULTY -->
-    <div class="tab-section" id="tab-faculty">
-      <div class="card">
-        <h3>👨‍🏫 Faculty Members</h3>
-        <div id="faculty-list"></div>
-        <button class="add-btn" onclick="addFaculty()">➕ Naya Faculty Add Karo</button><br>
-        <button class="save-btn" onclick="saveAll('faculty')">💾 Save Faculty</button>
-        <div class="status-bar" id="status-faculty"></div>
+      <!-- NOTICES -->
+      <div class="page" id="page-notices">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📢 Notice Bar Messages</span>
+            <button class="add-btn" onclick="addNotice()">➕ Add Notice</button>
+          </div>
+          <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:16px;">Ye messages website ke upar scrolling bar mein dikhenge. Emojis bhi use kar sakte ho.</p>
+          <div id="notices-list"></div>
+          <button class="save-btn" onclick="saveSection('notices')">💾 Save Notices</button>
+          <div class="status-bar" id="s-notices"></div>
+        </div>
       </div>
-    </div>
 
-    <!-- COURSES -->
-    <div class="tab-section" id="tab-courses">
-      <div class="card">
-        <h3>📚 Courses List</h3>
-        <div id="courses-list"></div>
-        <button class="add-btn" onclick="addCourse()">➕ Naya Course Add Karo</button><br>
-        <button class="save-btn" onclick="saveAll('courses')">💾 Save Courses</button>
-        <div class="status-bar" id="status-courses"></div>
+      <!-- WHY CHOOSE US -->
+      <div class="page" id="page-whychoose">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">✅ Why Choose Us Cards</span>
+            <button class="add-btn" onclick="addWhyCard()">➕ Add Card</button>
+          </div>
+          <div id="why-list"></div>
+          <button class="save-btn" onclick="saveSection('why')">💾 Save Why Cards</button>
+          <div class="status-bar" id="s-why"></div>
+        </div>
       </div>
-    </div>
 
-    <!-- GALLERY -->
-    <div class="tab-section" id="tab-gallery">
-      <div class="card">
-        <h3>🖼️ Gallery Images</h3>
-        <div class="tip-box">💡 <strong>Tip:</strong> Pehle GitHub repo mein images upload karo, phir file naam aur label yahan likho.</div>
-        <div id="gallery-list"></div>
-        <button class="add-btn" onclick="addGallery()">➕ Naya Image Add Karo</button><br>
-        <button class="save-btn" onclick="saveAll('gallery')">💾 Save Gallery</button>
-        <div class="status-bar" id="status-gallery"></div>
+      <!-- COURSES -->
+      <div class="page" id="page-courses">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🔬 Science Courses</span>
+            <button class="add-btn" onclick="addCourse('science')">➕ Add Course</button>
+          </div>
+          <div id="courses-science"></div>
+          <button class="save-btn" onclick="saveSection('courses')">💾 Save All Courses</button>
+          <div class="status-bar" id="s-courses"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">💼 Commerce Courses</span>
+            <button class="add-btn" onclick="addCourse('commerce')">➕ Add Course</button>
+          </div>
+          <div id="courses-commerce"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🎨 Arts Courses</span>
+            <button class="add-btn" onclick="addCourse('arts')">➕ Add Course</button>
+          </div>
+          <div id="courses-arts"></div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
+
+      <!-- SUMMER -->
+      <div class="page" id="page-summer">
+        <div class="card">
+          <div class="card-header"><span class="card-title">☀️ Summer Section Text</span></div>
+          <div class="form-group"><label>Heading (HTML allowed, &lt;br&gt; for line break)</label><textarea id="f_summer_heading"></textarea></div>
+          <div class="form-group"><label>Subtext</label><textarea id="f_summer_subtext" style="min-height:60px;"></textarea></div>
+          <button class="save-btn" onclick="saveSection('summer-text')">💾 Save Text</button>
+          <div class="status-bar" id="s-summer-text"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📝 Summer Programs</span>
+            <button class="add-btn" onclick="addSummerProg()">➕ Add Program</button>
+          </div>
+          <div id="summer-programs-list"></div>
+          <button class="save-btn" onclick="saveSection('summer-progs')">💾 Save Programs</button>
+          <div class="status-bar" id="s-summer-progs"></div>
+        </div>
+      </div>
+
+      <!-- FACULTY -->
+      <div class="page" id="page-faculty">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">👨‍🏫 Faculty Members</span>
+            <button class="add-btn" onclick="addFaculty()">➕ Add Faculty</button>
+          </div>
+          <div id="faculty-list"></div>
+          <button class="save-btn" onclick="saveSection('faculty')">💾 Save Faculty</button>
+          <div class="status-bar" id="s-faculty"></div>
+        </div>
+      </div>
+
+      <!-- TESTIMONIALS -->
+      <div class="page" id="page-testimonials">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">💬 Parent Testimonials</span>
+            <button class="add-btn" onclick="addTestimonial()">➕ Add Review</button>
+          </div>
+          <div id="testimonials-list"></div>
+          <button class="save-btn" onclick="saveSection('testimonials')">💾 Save Testimonials</button>
+          <div class="status-bar" id="s-testimonials"></div>
+        </div>
+      </div>
+
+      <!-- ACHIEVEMENTS -->
+      <div class="page" id="page-achievements">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🏆 Achievements / Stats</span>
+            <button class="add-btn" onclick="addAchievement()">➕ Add</button>
+          </div>
+          <div id="achievements-list"></div>
+          <button class="save-btn" onclick="saveSection('achievements')">💾 Save</button>
+          <div class="status-bar" id="s-achievements"></div>
+        </div>
+      </div>
+
+      <!-- GALLERY -->
+      <div class="page" id="page-gallery">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🖼️ Gallery Images</span>
+            <button class="add-btn" onclick="addGallery()">➕ Add Image</button>
+          </div>
+          <div class="tip-box">💡 <strong>Tip:</strong> Pehle GitHub repo mein image upload karo. File naam yahan likho. Agar file naam empty chhodoge toh emoji/color background dikhega.</div>
+          <div id="gallery-list"></div>
+          <button class="save-btn" onclick="saveSection('gallery')">💾 Save Gallery</button>
+          <div class="status-bar" id="s-gallery"></div>
+        </div>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="page" id="page-contact">
+        <div class="card">
+          <div class="card-header"><span class="card-title">📞 Contact Information</span></div>
+          <div class="form-group"><label>Full Address</label><input type="text" id="f_address" /></div>
+          <div class="form-row">
+            <div class="form-group"><label>Phone 1 (Mobile)</label><input type="text" id="f_phone1" /></div>
+            <div class="form-group"><label>Phone 2 (Landline / Optional)</label><input type="text" id="f_phone2" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Email</label><input type="text" id="f_email" /></div>
+            <div class="form-group"><label>Working Timings</label><input type="text" id="f_timings" /></div>
+          </div>
+          <div class="form-group"><label>WhatsApp Number (country code ke saath, spaces nahi)</label><input type="text" id="f_whatsapp" placeholder="919337994358" /></div>
+          <div class="form-group"><label>Google Maps Embed URL</label><textarea id="f_maps_embed" style="min-height:80px;font-size:0.78rem;"></textarea></div>
+          <button class="save-btn" onclick="saveSection('contact')">💾 Save Contact</button>
+          <div class="status-bar" id="s-contact"></div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="page" id="page-footer">
+        <div class="card">
+          <div class="card-header"><span class="card-title">🦶 Footer & Social Links</span></div>
+          <div class="form-group"><label>About Text (footer mein)</label><textarea id="f_footer_about"></textarea></div>
+          <div class="form-row">
+            <div class="form-group"><label>Facebook URL</label><input type="text" id="f_fb" /></div>
+            <div class="form-group"><label>Instagram URL</label><input type="text" id="f_ig" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>YouTube URL</label><input type="text" id="f_yt" /></div>
+            <div class="form-group"><label>WhatsApp URL</label><input type="text" id="f_wa_url" /></div>
+          </div>
+          <button class="save-btn" onclick="saveSection('footer')">💾 Save Footer</button>
+          <div class="status-bar" id="s-footer"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">📣 CTA Section</span></div>
+          <div class="form-group"><label>Heading</label><input type="text" id="f_cta_heading" /></div>
+          <div class="form-group"><label>Subtext</label><input type="text" id="f_cta_sub" /></div>
+          <div class="form-row">
+            <div class="form-group"><label>Button 1 Text</label><input type="text" id="f_cta_btn1" /></div>
+            <div class="form-group"><label>Button 2 Text</label><input type="text" id="f_cta_btn2" /></div>
+          </div>
+          <button class="save-btn" onclick="saveSection('cta')">💾 Save CTA</button>
+          <div class="status-bar" id="s-cta"></div>
+        </div>
+      </div>
+
+      <!-- SEO -->
+      <div class="page" id="page-seo">
+        <div class="card">
+          <div class="card-header"><span class="card-title">🔍 SEO Settings</span></div>
+          <div class="form-group"><label>Page Title (browser tab mein dikhega)</label><input type="text" id="f_seo_title" /></div>
+          <div class="form-group"><label>Meta Description (Google search mein dikhega)</label><textarea id="f_seo_desc"></textarea></div>
+          <div class="form-group"><label>Keywords (comma separated)</label><textarea id="f_seo_keywords" style="min-height:60px;"></textarea></div>
+          <button class="save-btn" onclick="saveSection('seo')">💾 Save SEO</button>
+          <div class="status-bar" id="s-seo"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">⚙️ API Scripts</span></div>
+          <div class="form-group"><label>Google Sheet READ Script URL</label><input type="text" id="f_sheet_read" /></div>
+          <div class="form-group"><label>Google Sheet WRITE Script URL</label><input type="text" id="f_sheet_write" /></div>
+          <button class="save-btn" onclick="saveSection('scripts')">💾 Save Scripts</button>
+          <div class="status-bar" id="s-scripts"></div>
+        </div>
+      </div>
+
+      <!-- ADMISSIONS TABLE -->
+      <div class="page" id="page-admissions">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🎓 Admission Applications</span>
+            <input class="table-search" type="text" placeholder="🔍 Search..." oninput="filterTable('t-admissions',this.value)" />
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Student</th><th>Parent</th><th>Phone</th><th>Class</th><th>Stream</th><th>Address</th><th>DOB</th><th>Status</th></tr></thead>
+              <tbody id="t-admissions"><tr><td class="empty-td" colspan="9">Loading... (Google Sheet se data aa raha hai)</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- COUNSELLINGS TABLE -->
+      <div class="page" id="page-counsellings">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📋 Counselling Bookings</span>
+            <input class="table-search" type="text" placeholder="🔍 Search..." oninput="filterTable('t-counsellings',this.value)" />
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Student</th><th>Parent</th><th>Phone</th><th>Class</th><th>Stream</th><th>Date</th><th>Status</th></tr></thead>
+              <tbody id="t-counsellings"><tr><td class="empty-td" colspan="8">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PREVIEW -->
+      <div class="page" id="page-preview">
+        <div class="preview-wrap">
+          <div class="preview-bar">
+            <div class="preview-dot r"></div><div class="preview-dot y"></div><div class="preview-dot g"></div>
+            <span class="preview-url">mycareracademic.github.io — Live Preview</span>
+            <button class="top-btn top-btn-ghost" onclick="document.getElementById('preview-frame').src += ''">🔄 Refresh</button>
+          </div>
+          <iframe id="preview-frame" class="preview-iframe" src="index.html"></iframe>
+        </div>
+      </div>
+
+    </div><!-- end main -->
+  </div><!-- end layout -->
+</div><!-- end admin-panel -->
 
 <script>
   const GITHUB_TOKEN = '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';
   const REPO_OWNER = 'nestnetconnect-ai';
   const REPO_NAME = 'mycareeracademic';
   const ADMIN_PASSWORD = 'mca@admin2026';
-  let currentContent = {};
+  let C = {}; // loaded content
 
+  /* ===== LOGIN ===== */
   function doLogin() {
-    if (document.getElementById('admin-password').value === ADMIN_PASSWORD) {
+    if(document.getElementById('pwd').value === ADMIN_PASSWORD) {
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('admin-panel').style.display = 'block';
       loadContent();
@@ -229,191 +549,466 @@
       document.getElementById('login-error').style.display = 'block';
     }
   }
-  document.getElementById('admin-password').addEventListener('keypress', e => { if(e.key==='Enter') doLogin(); });
+  document.getElementById('pwd').addEventListener('keypress', e => { if(e.key==='Enter') doLogin(); });
   function doLogout() {
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('admin-panel').style.display = 'none';
-    document.getElementById('admin-password').value = '';
+    document.getElementById('pwd').value = '';
   }
 
-  function switchTab(name, btn) {
-    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + name).classList.add('active');
-    btn.classList.add('active');
+  /* ===== NAVIGATION ===== */
+  function showPage(name, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    if(btn) btn.classList.add('active');
+    if(name === 'admissions' || name === 'counsellings') loadSheetData();
+    if(name === 'preview') document.getElementById('preview-frame').src = 'index.html?' + Date.now();
   }
 
+  /* ===== LOAD CONTENT ===== */
   async function loadContent() {
     try {
-      const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/content.json?t=${Date.now()}`);
-      currentContent = await res.json();
-      fillForms();
-    } catch(e) { console.error(e); }
+      const res = await fetch('content.json?t=' + Date.now());
+      C = await res.json();
+    } catch(e) { C = {}; }
+    fillAllForms();
+    loadSheetData();
   }
 
-  function fillForms() {
-    ['institute_name','tagline','hero_title','hero_subtitle','logo','hero_image','address','phone1','phone2','email','timings']
-      .forEach(f => { const el = document.getElementById(f); if(el && currentContent[f]) el.value = currentContent[f]; });
-    renderNotices(); renderFaculty(); renderCourses(); renderGallery();
+  /* ===== FILL FORMS ===== */
+  function fillAllForms() {
+    // Basic
+    setVal('f_institute_name', C.institute_name);
+    setVal('f_short_name', C.short_name);
+    setVal('f_tagline', C.tagline);
+    setVal('f_logo', C.logo);
+    setVal('f_hero_image', C.hero_image);
+
+    // Hero
+    const h = C.hero || {};
+    setVal('f_hero_badge', h.badge);
+    setVal('f_hero_title', h.title);
+    setVal('f_hero_subtitle', h.subtitle);
+    setVal('f_hero_btn1', h.btn1_text);
+    setVal('f_hero_btn2', h.btn2_text);
+    renderHeroStats();
+
+    // Notices
+    renderNoticesList();
+
+    // Why Choose
+    renderWhyList();
+
+    // Courses
+    renderCourseList('science');
+    renderCourseList('commerce');
+    renderCourseList('arts');
+
+    // Summer
+    const s = C.summer || {};
+    setVal('f_summer_heading', s.heading);
+    setVal('f_summer_subtext', s.subtext);
+    renderSummerProgs();
+
+    // Faculty
+    renderFacultyList();
+
+    // Testimonials
+    renderTestimonialsList();
+
+    // Achievements
+    renderAchievementsList();
+
+    // Gallery
+    renderGalleryList();
+
+    // Contact
+    const ct = C.contact || {};
+    setVal('f_address', ct.address);
+    setVal('f_phone1', ct.phone1);
+    setVal('f_phone2', ct.phone2);
+    setVal('f_email', ct.email);
+    setVal('f_timings', ct.timings);
+    setVal('f_whatsapp', ct.whatsapp);
+    setVal('f_maps_embed', ct.maps_embed);
+
+    // Footer
+    const f = C.footer || {};
+    setVal('f_footer_about', f.about_text);
+    const sc = f.social || {};
+    setVal('f_fb', sc.facebook);
+    setVal('f_ig', sc.instagram);
+    setVal('f_yt', sc.youtube);
+    setVal('f_wa_url', sc.whatsapp);
+
+    // CTA
+    const cta = C.cta || {};
+    setVal('f_cta_heading', cta.heading);
+    setVal('f_cta_sub', cta.subtext);
+    setVal('f_cta_btn1', cta.btn1);
+    setVal('f_cta_btn2', cta.btn2);
+
+    // SEO
+    const seo = C.seo || {};
+    setVal('f_seo_title', seo.title);
+    setVal('f_seo_desc', seo.description);
+    setVal('f_seo_keywords', seo.keywords);
+
+    // Scripts
+    const sc2 = C.scripts || {};
+    setVal('f_sheet_read', sc2.google_sheet_read);
+    setVal('f_sheet_write', sc2.google_sheet_write);
+
+    // Dashboard
+    document.getElementById('d-sections').textContent = '14';
   }
 
-  function renderNotices() {
-    const list = currentContent.notices || ['🎓 Admissions Open 2026 – Limited Seats Available!','📞 Free Career Counselling – Call 9337994358','☀️ Summer Course Registration Open','🏆 98% Students Guided Successfully'];
-    document.getElementById('notice-list').innerHTML = list.map((n,i) => `
-      <div class="notice-item">
-        <input type="text" value="${n.replace(/"/g,'&quot;')}" id="notice-${i}" placeholder="Notice text..." />
-        <button class="del-btn" onclick="removeItem('notices',${i})">🗑️</button>
+  function setVal(id, val) { const el = document.getElementById(id); if(el && val !== undefined && val !== null) el.value = val; }
+
+  /* ===== RENDER LISTS ===== */
+
+  function renderHeroStats() {
+    const stats = (C.hero || {}).stats || [];
+    document.getElementById('hero-stats-list').innerHTML = stats.map((s,i) => `
+      <div class="item-card">
+        <div class="item-card-header">
+          <span class="item-label">📊 Stat ${i+1}</span>
+          <div class="item-actions"><button class="del-btn" onclick="removeFrom('hero.stats',${i})">🗑️</button></div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group"><label>Number</label><input type="number" value="${s.num}" id="hs-num-${i}" /></div>
+          <div class="form-group"><label>Suffix (+, %, etc)</label><input type="text" value="${s.suffix||''}" id="hs-suf-${i}" /></div>
+          <div class="form-group"><label>Label</label><input type="text" value="${s.label}" id="hs-lbl-${i}" /></div>
+        </div>
+      </div>`).join('');
+  }
+  function addHeroStat() {
+    if(!C.hero) C.hero = {}; if(!C.hero.stats) C.hero.stats = [];
+    C.hero.stats.push({num:100, suffix:'+', label:'New Stat'});
+    renderHeroStats();
+  }
+
+  function renderNoticesList() {
+    const list = C.notices || [];
+    document.getElementById('notices-list').innerHTML = list.map((n,i) => `
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;">
+        <input type="text" value="${escHtml(n)}" id="n-${i}" style="flex:1;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.88rem;outline:none;" />
+        <button class="del-btn" onclick="removeFrom('notices',${i})">🗑️</button>
       </div>`).join('');
   }
   function addNotice() {
-    if(!currentContent.notices) currentContent.notices = [];
-    currentContent.notices.push('Naya notice yahan likho');
-    renderNotices();
+    if(!C.notices) C.notices = [];
+    C.notices.push('🆕 Naya notice yahan likho');
+    renderNoticesList();
   }
 
-  function renderFaculty() {
-    const list = currentContent.faculty || [
-      {name:'Dr. Rajesh Kumar Mohanty', subject:'Physics & Mathematics', experience:'12+ Years'},
-      {name:'Mrs. Pratima Dash', subject:'Chemistry & Biology', experience:'9+ Years'},
-      {name:'Mr. Subash Chandra Nayak', subject:'Commerce & Economics', experience:'11+ Years'}
-    ];
+  function renderWhyList() {
+    const list = C.why_choose || [];
+    document.getElementById('why-list').innerHTML = list.map((w,i) => `
+      <div class="item-card">
+        <div class="item-card-header">
+          <span class="item-label">${w.icon} ${w.title}</span>
+          <button class="del-btn" onclick="removeFrom('why_choose',${i})">🗑️</button>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group"><label>Emoji Icon</label><input type="text" value="${w.icon}" id="wc-icon-${i}" /></div>
+          <div class="form-group"><label>Title</label><input type="text" value="${escHtml(w.title)}" id="wc-title-${i}" /></div>
+          <div class="form-group"><label>Description</label><input type="text" value="${escHtml(w.desc)}" id="wc-desc-${i}" /></div>
+        </div>
+      </div>`).join('');
+  }
+  function addWhyCard() {
+    if(!C.why_choose) C.why_choose = [];
+    C.why_choose.push({icon:'⭐', title:'Naya Feature', desc:'Description yahan likho'});
+    renderWhyList();
+  }
+
+  function renderCourseList(stream) {
+    const list = (C.courses || {})[stream] || [];
+    document.getElementById('courses-' + stream).innerHTML = list.map((c,i) => `
+      <div class="item-card">
+        <div class="item-card-header">
+          <span class="item-label">${c.icon} ${c.name}</span>
+          <button class="del-btn" onclick="removeFrom('courses.${stream}',${i})">🗑️</button>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group"><label>Emoji</label><input type="text" value="${c.icon}" id="cs-${stream}-icon-${i}" /></div>
+          <div class="form-group"><label>Course Name</label><input type="text" value="${escHtml(c.name)}" id="cs-${stream}-name-${i}" /></div>
+          <div class="form-group"><label>Description</label><input type="text" value="${escHtml(c.desc)}" id="cs-${stream}-desc-${i}" /></div>
+        </div>
+      </div>`).join('');
+  }
+  function addCourse(stream) {
+    if(!C.courses) C.courses = {}; if(!C.courses[stream]) C.courses[stream] = [];
+    C.courses[stream].push({icon:'📖', name:'Naya Course', desc:'Description'});
+    renderCourseList(stream);
+  }
+
+  function renderSummerProgs() {
+    const list = (C.summer || {}).programs || [];
+    document.getElementById('summer-programs-list').innerHTML = list.map((p,i) => `
+      <div class="item-card">
+        <div class="item-card-header">
+          <span class="item-label">${p.icon} ${p.name}</span>
+          <button class="del-btn" onclick="removeFrom('summer.programs',${i})">🗑️</button>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group"><label>Emoji</label><input type="text" value="${p.icon}" id="sp-icon-${i}" /></div>
+          <div class="form-group"><label>Program Name</label><input type="text" value="${escHtml(p.name)}" id="sp-name-${i}" /></div>
+          <div class="form-group"><label>Description</label><input type="text" value="${escHtml(p.desc)}" id="sp-desc-${i}" /></div>
+        </div>
+      </div>`).join('');
+  }
+  function addSummerProg() {
+    if(!C.summer) C.summer = {}; if(!C.summer.programs) C.summer.programs = [];
+    C.summer.programs.push({icon:'🎯', name:'Naya Program', desc:'Description'});
+    renderSummerProgs();
+  }
+
+  function renderFacultyList() {
+    const list = C.faculty || [];
     document.getElementById('faculty-list').innerHTML = list.map((f,i) => `
       <div class="item-card">
-        <div class="item-card-header"><span>👤 Faculty ${i+1}</span><button class="del-btn" onclick="removeItem('faculty',${i})">🗑️ Hatao</button></div>
-        <div class="form-row-3">
-          <div class="form-group"><label>Naam</label><input type="text" value="${f.name}" id="fac-name-${i}" /></div>
-          <div class="form-group"><label>Subject</label><input type="text" value="${f.subject}" id="fac-sub-${i}" /></div>
-          <div class="form-group"><label>Experience</label><input type="text" value="${f.experience}" id="fac-exp-${i}" /></div>
+        <div class="item-card-header">
+          <span class="item-label">${f.emoji||'👨‍🏫'} ${f.name}</span>
+          <button class="del-btn" onclick="removeFrom('faculty',${i})">🗑️</button>
         </div>
+        <div class="form-row-4">
+          <div class="form-group"><label>Emoji</label><input type="text" value="${f.emoji||'👨‍🏫'}" id="fc-emoji-${i}" /></div>
+          <div class="form-group"><label>Name</label><input type="text" value="${escHtml(f.name)}" id="fc-name-${i}" /></div>
+          <div class="form-group"><label>Subject</label><input type="text" value="${escHtml(f.subject)}" id="fc-sub-${i}" /></div>
+          <div class="form-group"><label>Experience</label><input type="text" value="${escHtml(f.experience)}" id="fc-exp-${i}" /></div>
+        </div>
+        <div class="form-group"><label>Card Background (CSS gradient or color)</label><input type="text" value="${f.bg||''}" id="fc-bg-${i}" placeholder="linear-gradient(135deg,#0A3D62,#27AE60)" /></div>
       </div>`).join('');
   }
   function addFaculty() {
-    if(!currentContent.faculty) currentContent.faculty = [{name:'Dr. Rajesh Kumar Mohanty',subject:'Physics & Mathematics',experience:'12+ Years'},{name:'Mrs. Pratima Dash',subject:'Chemistry & Biology',experience:'9+ Years'},{name:'Mr. Subash Chandra Nayak',subject:'Commerce & Economics',experience:'11+ Years'}];
-    currentContent.faculty.push({name:'Naam likho', subject:'Subject likho', experience:'X+ Years'});
-    renderFaculty();
+    if(!C.faculty) C.faculty = [];
+    C.faculty.push({emoji:'👨‍🏫', name:'Naya Faculty', subject:'Subject', experience:'0+ Years', bg:'linear-gradient(135deg,#0A3D62,#27AE60)'});
+    renderFacultyList();
   }
 
-  function renderCourses() {
-    const list = currentContent.courses || [
-      {stream:'Science',icon:'⚛️',name:'Physics',desc:'Mechanics, Thermodynamics, Optics & Modern Physics'},
-      {stream:'Science',icon:'🧪',name:'Chemistry',desc:'Organic, Inorganic & Physical Chemistry'},
-      {stream:'Commerce',icon:'📊',name:'Accountancy',desc:'Financial Statements, Accounting Principles & GST'},
-      {stream:'Arts',icon:'🏛️',name:'History',desc:'Ancient, Medieval & Modern Indian History'}
-    ];
-    document.getElementById('courses-list').innerHTML = list.map((c,i) => `
+  function renderTestimonialsList() {
+    const list = C.testimonials || [];
+    document.getElementById('testimonials-list').innerHTML = list.map((t,i) => `
       <div class="item-card">
-        <div class="item-card-header"><span>${c.icon} ${c.name} (${c.stream})</span><button class="del-btn" onclick="removeItem('courses',${i})">🗑️ Hatao</button></div>
-        <div class="form-row">
-          <div class="form-group"><label>Stream</label>
-            <select id="crs-stream-${i}">
-              <option value="Science" ${c.stream==='Science'?'selected':''}>🔬 Science</option>
-              <option value="Commerce" ${c.stream==='Commerce'?'selected':''}>💼 Commerce</option>
-              <option value="Arts" ${c.stream==='Arts'?'selected':''}>🎨 Arts</option>
-            </select>
-          </div>
-          <div class="form-group"><label>Icon (Emoji)</label><input type="text" value="${c.icon}" id="crs-icon-${i}" /></div>
+        <div class="item-card-header">
+          <span class="item-label">⭐ ${t.name}</span>
+          <button class="del-btn" onclick="removeFrom('testimonials',${i})">🗑️</button>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>Course Naam</label><input type="text" value="${c.name}" id="crs-name-${i}" /></div>
-          <div class="form-group"><label>Description</label><input type="text" value="${c.desc}" id="crs-desc-${i}" /></div>
+          <div class="form-group"><label>Parent/Student Name</label><input type="text" value="${escHtml(t.name)}" id="tm-name-${i}" /></div>
+          <div class="form-group"><label>Role / Designation</label><input type="text" value="${escHtml(t.role)}" id="tm-role-${i}" /></div>
         </div>
+        <div class="form-row">
+          <div class="form-group"><label>Initial (avatar letter)</label><input type="text" value="${t.initial}" id="tm-init-${i}" maxlength="1" /></div>
+          <div class="form-group"><label>Stars (1-5)</label><input type="number" min="1" max="5" value="${t.stars}" id="tm-stars-${i}" /></div>
+        </div>
+        <div class="form-group"><label>Review Text</label><textarea id="tm-text-${i}">${escHtml(t.text)}</textarea></div>
       </div>`).join('');
   }
-  function addCourse() {
-    if(!currentContent.courses) currentContent.courses = [];
-    currentContent.courses.push({stream:'Science',icon:'📖',name:'Naya Course',desc:'Description yahan likho'});
-    renderCourses();
+  function addTestimonial() {
+    if(!C.testimonials) C.testimonials = [];
+    C.testimonials.push({name:'Parent Name', role:'Parent of Student', initial:'P', stars:5, text:'Review yahan likho...'});
+    renderTestimonialsList();
   }
 
-  function renderGallery() {
-    const list = currentContent.gallery || [
-      {label:'Our Campus',emoji:'🏫',file:''},
-      {label:'Smart Classroom',emoji:'🖥️',file:''},
-      {label:'Students',emoji:'👨‍🎓',file:''},
-      {label:'Events',emoji:'🎉',file:''}
-    ];
+  function renderAchievementsList() {
+    const list = C.achievements || [];
+    document.getElementById('achievements-list').innerHTML = list.map((a,i) => `
+      <div class="item-card">
+        <div class="item-card-header">
+          <span class="item-label">${a.icon} ${a.label}</span>
+          <button class="del-btn" onclick="removeFrom('achievements',${i})">🗑️</button>
+        </div>
+        <div class="form-row-4">
+          <div class="form-group"><label>Emoji</label><input type="text" value="${a.icon}" id="ac-icon-${i}" /></div>
+          <div class="form-group"><label>Number (blank for text)</label><input type="number" value="${a.num||''}" id="ac-num-${i}" /></div>
+          <div class="form-group"><label>Suffix (+, %, etc)</label><input type="text" value="${a.suffix||''}" id="ac-suf-${i}" /></div>
+          <div class="form-group"><label>Text (agar number nahi)</label><input type="text" value="${a.text||''}" id="ac-txt-${i}" /></div>
+        </div>
+        <div class="form-group"><label>Label</label><input type="text" value="${escHtml(a.label)}" id="ac-lbl-${i}" /></div>
+      </div>`).join('');
+  }
+  function addAchievement() {
+    if(!C.achievements) C.achievements = [];
+    C.achievements.push({icon:'⭐', num:100, suffix:'+', label:'Naya Achievement'});
+    renderAchievementsList();
+  }
+
+  function renderGalleryList() {
+    const list = C.gallery || [];
     document.getElementById('gallery-list').innerHTML = list.map((g,i) => `
       <div class="item-card">
-        <div class="item-card-header"><span>${g.emoji} ${g.label}</span><button class="del-btn" onclick="removeItem('gallery',${i})">🗑️ Hatao</button></div>
-        <div class="form-row-3">
-          <div class="form-group"><label>Label</label><input type="text" value="${g.label}" id="gal-label-${i}" /></div>
-          <div class="form-group"><label>Emoji</label><input type="text" value="${g.emoji}" id="gal-emoji-${i}" /></div>
-          <div class="form-group"><label>Image File Name</label><input type="text" value="${g.file||''}" id="gal-file-${i}" placeholder="campus.jpg" /></div>
+        <div class="item-card-header">
+          <span class="item-label">${g.emoji} ${g.label}</span>
+          <button class="del-btn" onclick="removeFrom('gallery',${i})">🗑️</button>
+        </div>
+        <div class="form-row-4">
+          <div class="form-group"><label>Emoji</label><input type="text" value="${g.emoji}" id="gl-emoji-${i}" /></div>
+          <div class="form-group"><label>Label</label><input type="text" value="${escHtml(g.label)}" id="gl-label-${i}" /></div>
+          <div class="form-group"><label>Image File Name</label><input type="text" value="${g.file||''}" id="gl-file-${i}" placeholder="campus.jpg" /></div>
+          <div class="form-group"><label>BG Color/Gradient</label><input type="text" value="${g.bg||''}" id="gl-bg-${i}" placeholder="linear-gradient(...)" /></div>
         </div>
       </div>`).join('');
   }
   function addGallery() {
-    if(!currentContent.gallery) currentContent.gallery = [];
-    currentContent.gallery.push({label:'Naya Section',emoji:'📸',file:''});
-    renderGallery();
+    if(!C.gallery) C.gallery = [];
+    C.gallery.push({emoji:'📸', label:'Naya Section', file:'', bg:'linear-gradient(135deg,#0A3D62,#154f7a)'});
+    renderGalleryList();
   }
 
-  function removeItem(type, index) {
-    const defaults = {
-      notices: ['🎓 Admissions Open 2026','📞 Free Career Counselling'],
-      faculty: [{name:'Dr. Rajesh Kumar Mohanty',subject:'Physics & Mathematics',experience:'12+ Years'}],
-      courses: [{stream:'Science',icon:'⚛️',name:'Physics',desc:'Mechanics'}],
-      gallery: [{label:'Our Campus',emoji:'🏫',file:''}]
-    };
-    if(!currentContent[type]) currentContent[type] = defaults[type];
-    currentContent[type].splice(index, 1);
-    if(type==='notices') renderNotices();
-    if(type==='faculty') renderFaculty();
-    if(type==='courses') renderCourses();
-    if(type==='gallery') renderGallery();
+  /* ===== COLLECT DATA ===== */
+  function collectAll() {
+    // Basic
+    if(getVal('f_institute_name')) C.institute_name = getVal('f_institute_name');
+    if(getVal('f_short_name')) C.short_name = getVal('f_short_name');
+    if(getVal('f_tagline') !== null) C.tagline = getVal('f_tagline');
+    if(getVal('f_logo')) C.logo = getVal('f_logo');
+    if(getVal('f_hero_image')) C.hero_image = getVal('f_hero_image');
+
+    // Hero
+    if(!C.hero) C.hero = {};
+    if(getVal('f_hero_badge')) C.hero.badge = getVal('f_hero_badge');
+    if(getVal('f_hero_title')) C.hero.title = getVal('f_hero_title');
+    if(getVal('f_hero_subtitle')) C.hero.subtitle = getVal('f_hero_subtitle');
+    if(getVal('f_hero_btn1')) C.hero.btn1_text = getVal('f_hero_btn1');
+    if(getVal('f_hero_btn2')) C.hero.btn2_text = getVal('f_hero_btn2');
+    const hsCount = document.querySelectorAll('[id^="hs-num-"]').length;
+    if(hsCount > 0) C.hero.stats = Array.from({length:hsCount}, (_,i) => ({
+      num: parseInt(getVal(`hs-num-${i}`)) || 0,
+      suffix: getVal(`hs-suf-${i}`) || '',
+      label: getVal(`hs-lbl-${i}`) || ''
+    }));
+
+    // Notices
+    const noticeEls = document.querySelectorAll('[id^="n-"]');
+    if(noticeEls.length > 0) C.notices = Array.from(noticeEls).map(el => el.value).filter(v => v.trim());
+
+    // Why Choose
+    const wcCount = document.querySelectorAll('[id^="wc-icon-"]').length;
+    if(wcCount > 0) C.why_choose = Array.from({length:wcCount}, (_,i) => ({
+      icon: getVal(`wc-icon-${i}`)||'⭐',
+      title: getVal(`wc-title-${i}`)||'',
+      desc: getVal(`wc-desc-${i}`)||''
+    }));
+
+    // Courses
+    if(!C.courses) C.courses = {};
+    ['science','commerce','arts'].forEach(stream => {
+      const count = document.querySelectorAll(`[id^="cs-${stream}-icon-"]`).length;
+      if(count > 0) C.courses[stream] = Array.from({length:count}, (_,i) => ({
+        icon: getVal(`cs-${stream}-icon-${i}`)||'📖',
+        name: getVal(`cs-${stream}-name-${i}`)||'',
+        desc: getVal(`cs-${stream}-desc-${i}`)||''
+      }));
+    });
+
+    // Summer
+    if(!C.summer) C.summer = {};
+    if(getVal('f_summer_heading')) C.summer.heading = getVal('f_summer_heading');
+    if(getVal('f_summer_subtext')) C.summer.subtext = getVal('f_summer_subtext');
+    const spCount = document.querySelectorAll('[id^="sp-icon-"]').length;
+    if(spCount > 0) C.summer.programs = Array.from({length:spCount}, (_,i) => ({
+      icon: getVal(`sp-icon-${i}`)||'🎯',
+      name: getVal(`sp-name-${i}`)||'',
+      desc: getVal(`sp-desc-${i}`)||''
+    }));
+
+    // Faculty
+    const fcCount = document.querySelectorAll('[id^="fc-name-"]').length;
+    if(fcCount > 0) C.faculty = Array.from({length:fcCount}, (_,i) => ({
+      emoji: getVal(`fc-emoji-${i}`)||'👨‍🏫',
+      name: getVal(`fc-name-${i}`)||'',
+      subject: getVal(`fc-sub-${i}`)||'',
+      experience: getVal(`fc-exp-${i}`)||'',
+      bg: getVal(`fc-bg-${i}`)||'linear-gradient(135deg,#0A3D62,#27AE60)'
+    }));
+
+    // Testimonials
+    const tmCount = document.querySelectorAll('[id^="tm-name-"]').length;
+    if(tmCount > 0) C.testimonials = Array.from({length:tmCount}, (_,i) => ({
+      name: getVal(`tm-name-${i}`)||'',
+      role: getVal(`tm-role-${i}`)||'',
+      initial: getVal(`tm-init-${i}`)||'P',
+      stars: parseInt(getVal(`tm-stars-${i}`))||5,
+      text: getVal(`tm-text-${i}`)||''
+    }));
+
+    // Achievements
+    const acCount = document.querySelectorAll('[id^="ac-icon-"]').length;
+    if(acCount > 0) C.achievements = Array.from({length:acCount}, (_,i) => ({
+      icon: getVal(`ac-icon-${i}`)||'⭐',
+      num: getVal(`ac-num-${i}`) ? parseInt(getVal(`ac-num-${i}`)) : null,
+      suffix: getVal(`ac-suf-${i}`)||'',
+      text: getVal(`ac-txt-${i}`)||'',
+      label: getVal(`ac-lbl-${i}`)||''
+    }));
+
+    // Gallery
+    const glCount = document.querySelectorAll('[id^="gl-emoji-"]').length;
+    if(glCount > 0) C.gallery = Array.from({length:glCount}, (_,i) => ({
+      emoji: getVal(`gl-emoji-${i}`)||'📸',
+      label: getVal(`gl-label-${i}`)||'',
+      file: getVal(`gl-file-${i}`)||'',
+      bg: getVal(`gl-bg-${i}`)||'linear-gradient(135deg,#0A3D62,#154f7a)'
+    }));
+
+    // Contact
+    if(!C.contact) C.contact = {};
+    C.contact.address = getVal('f_address')||'';
+    C.contact.phone1 = getVal('f_phone1')||'';
+    C.contact.phone2 = getVal('f_phone2')||'';
+    C.contact.email = getVal('f_email')||'';
+    C.contact.timings = getVal('f_timings')||'';
+    C.contact.whatsapp = getVal('f_whatsapp')||'';
+    C.contact.maps_embed = getVal('f_maps_embed')||'';
+
+    // Footer
+    if(!C.footer) C.footer = {};
+    C.footer.about_text = getVal('f_footer_about')||'';
+    C.footer.social = { facebook: getVal('f_fb'), instagram: getVal('f_ig'), youtube: getVal('f_yt'), whatsapp: getVal('f_wa_url') };
+
+    // CTA
+    C.cta = { heading: getVal('f_cta_heading'), subtext: getVal('f_cta_sub'), btn1: getVal('f_cta_btn1'), btn2: getVal('f_cta_btn2') };
+
+    // SEO
+    C.seo = { title: getVal('f_seo_title'), description: getVal('f_seo_desc'), keywords: getVal('f_seo_keywords') };
+
+    // Scripts
+    C.scripts = { google_sheet_read: getVal('f_sheet_read'), google_sheet_write: getVal('f_sheet_write') };
   }
 
-  function collectData() {
-    ['institute_name','tagline','hero_title','hero_subtitle','logo','hero_image','address','phone1','phone2','email','timings']
-      .forEach(f => { const el = document.getElementById(f); if(el) currentContent[f] = el.value; });
+  function getVal(id) { const el = document.getElementById(id); return el ? el.value : null; }
+  function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-    currentContent.notices = Array.from(document.querySelectorAll('[id^="notice-"]')).map(el => el.value).filter(v => v.trim());
-
-    const facCount = document.querySelectorAll('[id^="fac-name-"]').length;
-    currentContent.faculty = Array.from({length: facCount}, (_,i) => ({
-      name: document.getElementById(`fac-name-${i}`)?.value || '',
-      subject: document.getElementById(`fac-sub-${i}`)?.value || '',
-      experience: document.getElementById(`fac-exp-${i}`)?.value || ''
-    }));
-
-    const crsCount = document.querySelectorAll('[id^="crs-name-"]').length;
-    currentContent.courses = Array.from({length: crsCount}, (_,i) => ({
-      stream: document.getElementById(`crs-stream-${i}`)?.value || 'Science',
-      icon: document.getElementById(`crs-icon-${i}`)?.value || '📖',
-      name: document.getElementById(`crs-name-${i}`)?.value || '',
-      desc: document.getElementById(`crs-desc-${i}`)?.value || ''
-    }));
-
-    const galCount = document.querySelectorAll('[id^="gal-label-"]').length;
-    currentContent.gallery = Array.from({length: galCount}, (_,i) => ({
-      label: document.getElementById(`gal-label-${i}`)?.value || '',
-      emoji: document.getElementById(`gal-emoji-${i}`)?.value || '📸',
-      file: document.getElementById(`gal-file-${i}`)?.value || ''
-    }));
-  }
-
-  async function saveAll(section) {
-    collectData();
-    const statusId = 'status-' + section;
-    showStatus(statusId, 'loading', '⏳ Save ho raha hai...');
+  /* ===== SAVE ===== */
+  async function saveSection(section) {
+    collectAll();
+    const statusId = 's-' + section;
+    showStatus(statusId, 'loading', '<span class="spin">⏳</span> Saving...');
     document.querySelectorAll('.save-btn').forEach(b => b.disabled = true);
     try {
+      // Get SHA
       const shaRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content.json`, {
         headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
       });
       const shaData = await shaRes.json();
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify(currentContent, null, 2))));
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(C, null, 2))));
       const updateRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content.json`, {
         method: 'PUT',
         headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: `Admin: ${section} updated`, content, sha: shaData.sha })
+        body: JSON.stringify({ message: `Admin: Updated ${section}`, content, sha: shaData.sha })
       });
       if(updateRes.ok) {
-        showStatus(statusId, 'success', '✅ Save ho gaya! 2-3 minute mein website update ho jayegi.');
+        showStatus(statusId, 'success', '✅ Saved! Website 2-3 minutes mein update hogi.');
         setTimeout(() => { const el = document.getElementById(statusId); if(el) el.style.display='none'; }, 6000);
-      } else { throw new Error('Failed'); }
+      } else {
+        throw new Error('GitHub update failed: ' + updateRes.status);
+      }
     } catch(e) {
-      showStatus(statusId, 'error', '❌ Error aaya! Internet check karo aur dobara try karo.');
+      showStatus(statusId, 'error', '❌ Error: ' + e.message + ' — Internet check karo.');
     }
     document.querySelectorAll('.save-btn').forEach(b => b.disabled = false);
   }
@@ -422,7 +1017,86 @@
     const el = document.getElementById(id);
     if(!el) return;
     el.className = 'status-bar ' + type;
-    el.textContent = msg;
+    el.innerHTML = msg;
+  }
+
+  /* ===== REMOVE ITEMS ===== */
+  function removeFrom(path, index) {
+    const parts = path.split('.');
+    let obj = C;
+    for(let i = 0; i < parts.length - 1; i++) {
+      if(!obj[parts[i]]) return;
+      obj = obj[parts[i]];
+    }
+    const key = parts[parts.length - 1];
+    if(!Array.isArray(obj[key])) return;
+    obj[key].splice(index, 1);
+    // Re-render
+    const renderMap = {
+      'notices': renderNoticesList,
+      'why_choose': renderWhyList,
+      'faculty': renderFacultyList,
+      'testimonials': renderTestimonialsList,
+      'achievements': renderAchievementsList,
+      'gallery': renderGalleryList,
+      'summer.programs': renderSummerProgs,
+      'courses.science': () => renderCourseList('science'),
+      'courses.commerce': () => renderCourseList('commerce'),
+      'courses.arts': () => renderCourseList('arts'),
+      'hero.stats': renderHeroStats
+    };
+    if(renderMap[path]) renderMap[path]();
+  }
+
+  /* ===== LOAD SHEET DATA ===== */
+  async function loadSheetData() {
+    const url = (C.scripts?.google_sheet_read || '') + '?t=' + Date.now();
+    if(!url.startsWith('http')) return;
+    try {
+      const res = await fetch(url, {redirect:'follow'});
+      const data = await res.json();
+      const admissions = data.admissions || [];
+      const counsellings = data.counsellings || [];
+
+      document.getElementById('d-admissions').textContent = admissions.length;
+      document.getElementById('d-counsellings').textContent = counsellings.length;
+
+      const tbody = document.getElementById('t-admissions');
+      tbody.innerHTML = admissions.length ? admissions.map((a,i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td><strong>${a.name||'—'}</strong></td>
+          <td>${a.parent||'—'}</td>
+          <td><a href="tel:${a.phone}" style="color:var(--primary);">${a.phone||'—'}</a></td>
+          <td>${a.cls||'—'}</td>
+          <td>${a.stream||'—'}</td>
+          <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${a.address||'—'}</td>
+          <td>${a.dob||'—'}</td>
+          <td><span class="badge badge-${a.status||'new'}">${(a.status||'new').charAt(0).toUpperCase()+(a.status||'new').slice(1)}</span></td>
+        </tr>`).join('') : '<tr><td class="empty-td" colspan="9">Koi application nahi mili.</td></tr>';
+
+      const cbody = document.getElementById('t-counsellings');
+      cbody.innerHTML = counsellings.length ? counsellings.map((c,i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td><strong>${c.name||'—'}</strong></td>
+          <td>${c.parent||'—'}</td>
+          <td><a href="tel:${c.phone}" style="color:var(--primary);">${c.phone||'—'}</a></td>
+          <td>${c.cls||'—'}</td>
+          <td>${c.stream||'—'}</td>
+          <td>${c.date||'—'}</td>
+          <td><span class="badge badge-pending">Pending</span></td>
+        </tr>`).join('') : '<tr><td class="empty-td" colspan="8">Koi booking nahi mili.</td></tr>';
+    } catch(e) {
+      console.log('Sheet load failed:', e);
+    }
+  }
+
+  function filterTable(tbodyId, query) {
+    const q = query.toLowerCase();
+    document.querySelectorAll(`#${tbodyId} tr`).forEach(row => {
+      row.style.display = !q || row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
   }
 </script>
 </body>
