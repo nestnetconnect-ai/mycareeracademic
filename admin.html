@@ -27,6 +27,8 @@
     .login-input:focus { border-color:var(--primary); }
     .login-btn { width:100%; padding:14px; background:linear-gradient(135deg,var(--primary),var(--primary-light)); color:white; border:none; border-radius:10px; font-family:'Poppins',sans-serif; font-size:0.95rem; font-weight:700; cursor:pointer; }
     .login-error { color:var(--danger); font-size:0.82rem; margin-top:10px; display:none; }
+    .token-hint { background:#f0f4f8; border-radius:10px; padding:12px; margin-bottom:14px; font-size:0.75rem; color:var(--text-light); text-align:left; line-height:1.6; }
+    .token-hint a { color:var(--primary); font-weight:600; }
 
     /* LAYOUT */
     #admin-panel { display:none; min-height:100vh; }
@@ -152,10 +154,14 @@
   <div class="login-box">
     <img src="Logo.png" alt="MCA" class="login-logo" onerror="this.style.display='none'">
     <h2>MCA Admin Panel</h2>
-    <p>Website manage karne ke liye login karo</p>
-    <input type="password" class="login-input" id="pwd" placeholder="🔑 Password daalo" />
-    <button class="login-btn" onclick="doLogin()">Login Karo →</button>
-    <p class="login-error" id="login-error">❌ Galat password! Dobara try karo.</p>
+    <p>Enter your admin password and GitHub token</p>
+    <input type="password" class="login-input" id="pwd" placeholder="Admin Password" />
+    <input type="password" class="login-input" id="gh-token" placeholder="GitHub Token (ghp_...)" />
+    <div class="token-hint">
+      Don't have a token? Go to <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> → Generate new token (classic) → tick <strong>repo</strong> → Generate → Copy
+    </div>
+    <button class="login-btn" onclick="doLogin()">Login</button>
+    <p class="login-error" id="login-error">Wrong password or token! Please try again.</p>
   </div>
 </div>
 
@@ -210,7 +216,7 @@
       <!-- DASHBOARD -->
       <div class="page active" id="page-dashboard">
         <h2 style="margin-bottom:6px;color:var(--primary);">👋 Welcome to Admin Panel</h2>
-        <p style="color:var(--text-light);margin-bottom:24px;font-size:0.88rem;">Yahan se apni website ka pura control rakho</p>
+        <p style="color:var(--text-light);margin-bottom:24px;font-size:0.88rem;">Manage your entire website from here</p>
         <div class="dash-stats">
           <div class="dash-stat"><span class="dash-icon">🎓</span><span class="dash-num" id="d-admissions">0</span><div class="dash-label">Total Admissions</div></div>
           <div class="dash-stat"><span class="dash-icon">📋</span><span class="dash-num" id="d-counsellings">0</span><div class="dash-label">Counselling Bookings</div></div>
@@ -221,20 +227,20 @@
           <div class="card-header"><span class="card-title">📝 Quick Guide</span></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div style="background:var(--bg);border-radius:10px;padding:16px;">
-              <strong style="color:var(--primary);font-size:0.85rem;">✏️ Content Kaise Edit Karein?</strong>
-              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">Sidebar mein jo section edit karna hai usmein jao, changes karo aur "Save" button dabao. 2-3 minutes mein website update ho jayegi.</p>
+              <strong style="color:var(--primary);font-size:0.85rem;">✏️ How to Edit Content?</strong>
+              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">Go to the section you want to edit in the sidebar, make your changes and click the "Save" button. Website will update in 2-3 minutes.</p>
             </div>
             <div style="background:var(--bg);border-radius:10px;padding:16px;">
-              <strong style="color:var(--primary);font-size:0.85rem;">🖼️ Images Kaise Add Karein?</strong>
-              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">GitHub repo mein image upload karo (same folder mein). Phir Gallery ya Images section mein sirf file ka naam likho jaise: campus.jpg</p>
+              <strong style="color:var(--primary);font-size:0.85rem;">🖼️ How to Add Images?</strong>
+              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">Upload the image to your GitHub repo (same folder). Then in the Gallery or Images section, just enter the file name e.g. campus.jpg</p>
             </div>
             <div style="background:var(--bg);border-radius:10px;padding:16px;">
-              <strong style="color:var(--primary);font-size:0.85rem;">📱 Applications Kahan Milenge?</strong>
-              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">Sidebar mein "Admissions" aur "Counsellings" section mein Google Sheet se data load hota hai. Refresh karne ke liye page reload karo.</p>
+              <strong style="color:var(--primary);font-size:0.85rem;">📱 Where to Find Applications?</strong>
+              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">The "Admissions" and "Counsellings" sections load data from Google Sheet. Reload the page to refresh.</p>
             </div>
             <div style="background:var(--bg);border-radius:10px;padding:16px;">
-              <strong style="color:var(--primary);font-size:0.85rem;">🔑 Password Change Karein?</strong>
-              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">admin.html file mein ADMIN_PASSWORD variable dhundho aur apna naya password set karo.</p>
+              <strong style="color:var(--primary);font-size:0.85rem;">🔑 How to Change Password?</strong>
+              <p style="font-size:0.8rem;color:var(--text-light);margin-top:6px;line-height:1.6;">Find the ADMIN_PASSWORD variable in the admin.html file and set your new password.</p>
             </div>
           </div>
         </div>
@@ -248,13 +254,13 @@
             <div class="form-group"><label>Institute Name</label><input type="text" id="f_institute_name" /></div>
             <div class="form-group"><label>Short Name / Abbreviation</label><input type="text" id="f_short_name" /></div>
           </div>
-          <div class="form-group"><label>Tagline (Navbar ke neeche dikhega)</label><input type="text" id="f_tagline" /></div>
+          <div class="form-group"><label>Tagline (shown below navbar)</label><input type="text" id="f_tagline" /></div>
           <button class="save-btn" onclick="saveSection('basic')">💾 Save Basic Info</button>
           <div class="status-bar" id="s-basic"></div>
         </div>
         <div class="card">
           <div class="card-header"><span class="card-title">🖼️ Logo & Hero Image</span></div>
-          <div class="tip-box">💡 <strong>Tip:</strong> Pehle GitHub repo mein image file upload karo, phir yahan sirf file ka naam likho (jaise: Logo.png, hero.png)</div>
+          <div class="tip-box">💡 <strong>Tip:</strong> First upload the image file to your GitHub repo, then just enter the file name here (e.g. Logo.png, hero.png)</div>
           <div class="form-row">
             <div class="form-group"><label>Logo File Name</label><input type="text" id="f_logo" placeholder="Logo.png" /></div>
             <div class="form-group"><label>Hero Image File Name</label><input type="text" id="f_hero_image" placeholder="hero.png" /></div>
@@ -268,8 +274,8 @@
       <div class="page" id="page-hero">
         <div class="card">
           <div class="card-header"><span class="card-title">🎯 Hero Section</span></div>
-          <div class="form-group"><label>Badge Text (top mein)</label><input type="text" id="f_hero_badge" /></div>
-          <div class="form-group"><label>Main Title (HTML allowed, jaise &lt;span&gt;highlighted&lt;/span&gt;)</label><textarea id="f_hero_title"></textarea></div>
+          <div class="form-group"><label>Badge Text (shown at top)</label><input type="text" id="f_hero_badge" /></div>
+          <div class="form-group"><label>Main Title (HTML allowed, e.g. &lt;span&gt;highlighted&lt;/span&gt;)</label><textarea id="f_hero_title"></textarea></div>
           <div class="form-group"><label>Subtitle</label><textarea id="f_hero_subtitle" style="min-height:60px;"></textarea></div>
           <div class="form-row">
             <div class="form-group"><label>Button 1 Text</label><input type="text" id="f_hero_btn1" /></div>
@@ -296,7 +302,7 @@
             <span class="card-title">📢 Notice Bar Messages</span>
             <button class="add-btn" onclick="addNotice()">➕ Add Notice</button>
           </div>
-          <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:16px;">Ye messages website ke upar scrolling bar mein dikhenge. Emojis bhi use kar sakte ho.</p>
+          <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:16px;">These messages will appear in the scrolling bar at the top of the website. You can use emojis too.</p>
           <div id="notices-list"></div>
           <button class="save-btn" onclick="saveSection('notices')">💾 Save Notices</button>
           <div class="status-bar" id="s-notices"></div>
@@ -409,7 +415,7 @@
             <span class="card-title">🖼️ Gallery Images</span>
             <button class="add-btn" onclick="addGallery()">➕ Add Image</button>
           </div>
-          <div class="tip-box">💡 <strong>Tip:</strong> Pehle GitHub repo mein image upload karo. File naam yahan likho. Agar file naam empty chhodoge toh emoji/color background dikhega.</div>
+          <div class="tip-box">💡 <strong>Tip:</strong> First upload the image to your GitHub repo. Enter the file name here. If file name is left empty, the emoji/color background will be shown.</div>
           <div id="gallery-list"></div>
           <button class="save-btn" onclick="saveSection('gallery')">💾 Save Gallery</button>
           <div class="status-bar" id="s-gallery"></div>
@@ -429,7 +435,7 @@
             <div class="form-group"><label>Email</label><input type="text" id="f_email" /></div>
             <div class="form-group"><label>Working Timings</label><input type="text" id="f_timings" /></div>
           </div>
-          <div class="form-group"><label>WhatsApp Number (country code ke saath, spaces nahi)</label><input type="text" id="f_whatsapp" placeholder="919337994358" /></div>
+          <div class="form-group"><label>WhatsApp Number (with country code, no spaces)</label><input type="text" id="f_whatsapp" placeholder="919337994358" /></div>
           <div class="form-group"><label>Google Maps Embed URL</label><textarea id="f_maps_embed" style="min-height:80px;font-size:0.78rem;"></textarea></div>
           <button class="save-btn" onclick="saveSection('contact')">💾 Save Contact</button>
           <div class="status-bar" id="s-contact"></div>
@@ -440,7 +446,7 @@
       <div class="page" id="page-footer">
         <div class="card">
           <div class="card-header"><span class="card-title">🦶 Footer & Social Links</span></div>
-          <div class="form-group"><label>About Text (footer mein)</label><textarea id="f_footer_about"></textarea></div>
+          <div class="form-group"><label>About Text (shown in footer)</label><textarea id="f_footer_about"></textarea></div>
           <div class="form-row">
             <div class="form-group"><label>Facebook URL</label><input type="text" id="f_fb" /></div>
             <div class="form-group"><label>Instagram URL</label><input type="text" id="f_ig" /></div>
@@ -469,8 +475,8 @@
       <div class="page" id="page-seo">
         <div class="card">
           <div class="card-header"><span class="card-title">🔍 SEO Settings</span></div>
-          <div class="form-group"><label>Page Title (browser tab mein dikhega)</label><input type="text" id="f_seo_title" /></div>
-          <div class="form-group"><label>Meta Description (Google search mein dikhega)</label><textarea id="f_seo_desc"></textarea></div>
+          <div class="form-group"><label>Page Title (shown in browser tab)</label><input type="text" id="f_seo_title" /></div>
+          <div class="form-group"><label>Meta Description (shown in Google search results)</label><textarea id="f_seo_desc"></textarea></div>
           <div class="form-group"><label>Keywords (comma separated)</label><textarea id="f_seo_keywords" style="min-height:60px;"></textarea></div>
           <button class="save-btn" onclick="saveSection('seo')">💾 Save SEO</button>
           <div class="status-bar" id="s-seo"></div>
@@ -494,7 +500,7 @@
           <div class="table-wrap">
             <table>
               <thead><tr><th>#</th><th>Student</th><th>Parent</th><th>Phone</th><th>Class</th><th>Stream</th><th>Address</th><th>DOB</th><th>Status</th></tr></thead>
-              <tbody id="t-admissions"><tr><td class="empty-td" colspan="9">Loading... (Google Sheet se data aa raha hai)</td></tr></tbody>
+              <tbody id="t-admissions"><tr><td class="empty-td" colspan="9">Loading data from Google Sheet...</td></tr></tbody>
             </table>
           </div>
         </div>
@@ -533,7 +539,7 @@
 </div><!-- end admin-panel -->
 
 <script>
-  const GITHUB_TOKEN = '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';
+  let GITHUB_TOKEN = ''; // Set at login time from user input
   const REPO_OWNER = 'nestnetconnect-ai';
   const REPO_NAME = 'mycareeracademic';
   const ADMIN_PASSWORD = 'mca@admin2026';
@@ -541,15 +547,27 @@
 
   /* ===== LOGIN ===== */
   function doLogin() {
-    if(document.getElementById('pwd').value === ADMIN_PASSWORD) {
+    const pwd = document.getElementById('pwd').value;
+    const token = document.getElementById('gh-token').value.trim();
+    if(pwd === ADMIN_PASSWORD && token.startsWith('ghp_')) {
+      GITHUB_TOKEN = token;
+      localStorage.setItem('mca_gh_token', token);
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('admin-panel').style.display = 'block';
       loadContent();
+    } else if(pwd !== ADMIN_PASSWORD) {
+      document.getElementById('login-error').style.display = 'block';
+      document.getElementById('login-error').textContent = 'Wrong password!';
     } else {
       document.getElementById('login-error').style.display = 'block';
+      document.getElementById('login-error').textContent = 'Invalid GitHub Token! It should start with ghp_';
     }
   }
   document.getElementById('pwd').addEventListener('keypress', e => { if(e.key==='Enter') doLogin(); });
+  document.getElementById('gh-token').addEventListener('keypress', e => { if(e.key==='Enter') doLogin(); });
+  // Auto-fill saved token
+  const savedToken = localStorage.getItem('mca_gh_token');
+  if(savedToken) document.getElementById('gh-token').value = savedToken;
   function doLogout() {
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('admin-panel').style.display = 'none';
@@ -699,7 +717,7 @@
   }
   function addNotice() {
     if(!C.notices) C.notices = [];
-    C.notices.push('🆕 Naya notice yahan likho');
+    C.notices.push('🆕 Enter new notice here');
     renderNoticesList();
   }
 
@@ -720,7 +738,7 @@
   }
   function addWhyCard() {
     if(!C.why_choose) C.why_choose = [];
-    C.why_choose.push({icon:'⭐', title:'Naya Feature', desc:'Description yahan likho'});
+    C.why_choose.push({icon:'⭐', title:'New Feature', desc:'Enter description here'});
     renderWhyList();
   }
 
@@ -741,7 +759,7 @@
   }
   function addCourse(stream) {
     if(!C.courses) C.courses = {}; if(!C.courses[stream]) C.courses[stream] = [];
-    C.courses[stream].push({icon:'📖', name:'Naya Course', desc:'Description'});
+    C.courses[stream].push({icon:'📖', name:'New Course', desc:'Enter description'});
     renderCourseList(stream);
   }
 
@@ -762,7 +780,7 @@
   }
   function addSummerProg() {
     if(!C.summer) C.summer = {}; if(!C.summer.programs) C.summer.programs = [];
-    C.summer.programs.push({icon:'🎯', name:'Naya Program', desc:'Description'});
+    C.summer.programs.push({icon:'🎯', name:'New Program', desc:'Enter description'});
     renderSummerProgs();
   }
 
@@ -785,7 +803,7 @@
   }
   function addFaculty() {
     if(!C.faculty) C.faculty = [];
-    C.faculty.push({emoji:'👨‍🏫', name:'Naya Faculty', subject:'Subject', experience:'0+ Years', bg:'linear-gradient(135deg,#0A3D62,#27AE60)'});
+    C.faculty.push({emoji:'👨‍🏫', name:'New Faculty', subject:'Enter Subject', experience:'0+ Years', bg:'linear-gradient(135deg,#0A3D62,#27AE60)'});
     renderFacultyList();
   }
 
@@ -810,7 +828,7 @@
   }
   function addTestimonial() {
     if(!C.testimonials) C.testimonials = [];
-    C.testimonials.push({name:'Parent Name', role:'Parent of Student', initial:'P', stars:5, text:'Review yahan likho...'});
+    C.testimonials.push({name:'Parent Name', role:'Parent of Student', initial:'P', stars:5, text:'Enter review text here...'});
     renderTestimonialsList();
   }
 
@@ -826,14 +844,14 @@
           <div class="form-group"><label>Emoji</label><input type="text" value="${a.icon}" id="ac-icon-${i}" /></div>
           <div class="form-group"><label>Number (blank for text)</label><input type="number" value="${a.num||''}" id="ac-num-${i}" /></div>
           <div class="form-group"><label>Suffix (+, %, etc)</label><input type="text" value="${a.suffix||''}" id="ac-suf-${i}" /></div>
-          <div class="form-group"><label>Text (agar number nahi)</label><input type="text" value="${a.text||''}" id="ac-txt-${i}" /></div>
+          <div class="form-group"><label>Text (if no number)</label><input type="text" value="${a.text||''}" id="ac-txt-${i}" /></div>
         </div>
         <div class="form-group"><label>Label</label><input type="text" value="${escHtml(a.label)}" id="ac-lbl-${i}" /></div>
       </div>`).join('');
   }
   function addAchievement() {
     if(!C.achievements) C.achievements = [];
-    C.achievements.push({icon:'⭐', num:100, suffix:'+', label:'Naya Achievement'});
+    C.achievements.push({icon:'⭐', num:100, suffix:'+', label:'New Achievement'});
     renderAchievementsList();
   }
 
@@ -855,7 +873,7 @@
   }
   function addGallery() {
     if(!C.gallery) C.gallery = [];
-    C.gallery.push({emoji:'📸', label:'Naya Section', file:'', bg:'linear-gradient(135deg,#0A3D62,#154f7a)'});
+    C.gallery.push({emoji:'📸', label:'New Section', file:'', bg:'linear-gradient(135deg,#0A3D62,#154f7a)'});
     renderGalleryList();
   }
 
@@ -1002,13 +1020,13 @@
         body: JSON.stringify({ message: `Admin: Updated ${section}`, content, sha: shaData.sha })
       });
       if(updateRes.ok) {
-        showStatus(statusId, 'success', '✅ Saved! Website 2-3 minutes mein update hogi.');
+        showStatus(statusId, 'success', '✅ Saved! Website will update in 2-3 minutes.');
         setTimeout(() => { const el = document.getElementById(statusId); if(el) el.style.display='none'; }, 6000);
       } else {
         throw new Error('GitHub update failed: ' + updateRes.status);
       }
     } catch(e) {
-      showStatus(statusId, 'error', '❌ Error: ' + e.message + ' — Internet check karo.');
+      showStatus(statusId, 'error', '❌ Error: ' + e.message + ' — Check your internet connection.');
     }
     document.querySelectorAll('.save-btn').forEach(b => b.disabled = false);
   }
@@ -1073,7 +1091,7 @@
           <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${a.address||'—'}</td>
           <td>${a.dob||'—'}</td>
           <td><span class="badge badge-${a.status||'new'}">${(a.status||'new').charAt(0).toUpperCase()+(a.status||'new').slice(1)}</span></td>
-        </tr>`).join('') : '<tr><td class="empty-td" colspan="9">Koi application nahi mili.</td></tr>';
+        </tr>`).join('') : '<tr><td class="empty-td" colspan="9">No applications found.</td></tr>';
 
       const cbody = document.getElementById('t-counsellings');
       cbody.innerHTML = counsellings.length ? counsellings.map((c,i) => `
@@ -1086,7 +1104,7 @@
           <td>${c.stream||'—'}</td>
           <td>${c.date||'—'}</td>
           <td><span class="badge badge-pending">Pending</span></td>
-        </tr>`).join('') : '<tr><td class="empty-td" colspan="8">Koi booking nahi mili.</td></tr>';
+        </tr>`).join('') : '<tr><td class="empty-td" colspan="8">No bookings found.</td></tr>';
     } catch(e) {
       console.log('Sheet load failed:', e);
     }
