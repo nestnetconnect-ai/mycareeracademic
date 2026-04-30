@@ -1,13 +1,151 @@
 {
+  "institute_name": "My Career Academic",
+  "short_name": "MCA",
+  "tagline": "Kendrapara, Odisha",
   "logo": "Logo.png",
   "hero_image": "hero.png",
-  "institute_name": "My Career Academic",
-  "tagline": "Kendrapara, Odisha",
-  "address": "Maruti Chhaka, Gulnagar, Kendrapara – 754211, Odisha, India",
-  "phone1": "+91 93379 94358",
-  "phone2": "06727-796700",
-  "email": "info@mycareracademic.in",
-  "timings": "Monday – Saturday: 7:00 AM – 8:00 PM",
-  "hero_title": "Shape Your Child's Future With the Right Career Guidance",
-  "hero_subtitle": "Academic education with character development and modern technology. Building tomorrow's leaders in the heart of Odisha."
+
+  "hero": {
+    "badge": "⭐ Kendrapara's Premier Coaching Institute",
+    "title": "Shape Your Child's Future With the Right <span>Career Guidance</span>",
+    "subtitle": "Academic education with character development and modern technology. Building tomorrow's leaders in the heart of Odisha.",
+    "btn1_text": "📋 Free Counselling",
+    "btn2_text": "🎓 Apply Now",
+    "stats": [
+      { "num": 6, "suffix": "+", "label": "Years Experience" },
+      { "num": 500, "suffix": "+", "label": "Students Guided" },
+      { "num": 98, "suffix": "%", "label": "Success Rate" }
+    ]
+  },
+
+  "notices": [
+    "🎓 Admissions Open 2026 – Limited Seats Available!",
+    "📞 Free Career Counselling Available – Call 9337994358",
+    "☀️ Summer Course Registration Open – Spoken English · Yoga · Computer Classes",
+    "🏆 98% Students Guided Successfully – Join MCA Today"
+  ],
+
+  "why_choose": [
+    { "icon": "📚", "title": "Academic + Character", "desc": "Education that builds both intellect and integrity for holistic development." },
+    { "icon": "🧠", "title": "Mid Brain Activation & DMIT Test", "desc": "Dermatoglyphics-based assessment to unlock your child's true potential." },
+    { "icon": "💻", "title": "Technology-Based Teaching", "desc": "Smart classrooms with digital tools for engaging, effective learning." },
+    { "icon": "❄️", "title": "Modern AC Classrooms", "desc": "Comfortable, distraction-free environment designed for focused study." },
+    { "icon": "📖", "title": "Digital Library", "desc": "Access thousands of resources, study materials and reference books digitally." },
+    { "icon": "🗣️", "title": "Spoken English Training", "desc": "Build communication skills for academic and professional confidence." },
+    { "icon": "🌟", "title": "Soft Skill Development", "desc": "Leadership, teamwork and personality grooming alongside academics." },
+    { "icon": "🧘", "title": "Yoga Classes", "desc": "Mental wellness and stress management through regular yoga sessions." }
+  ],
+
+  "courses": {
+    "science": [
+      { "icon": "⚛️", "name": "Physics", "desc": "Mechanics, Thermodynamics, Optics & Modern Physics" },
+      { "icon": "🧪", "name": "Chemistry", "desc": "Organic, Inorganic & Physical Chemistry" },
+      { "icon": "📐", "name": "Mathematics", "desc": "Calculus, Algebra, Coordinate Geometry & Statistics" },
+      { "icon": "🧬", "name": "Biology", "desc": "Botany, Zoology, Genetics & Human Physiology" }
+    ],
+    "commerce": [
+      { "icon": "📊", "name": "Accountancy", "desc": "Financial Statements, Accounting Principles & GST" },
+      { "icon": "🏢", "name": "Business Studies", "desc": "Management, Marketing, Finance & Entrepreneurship" },
+      { "icon": "📈", "name": "Economics", "desc": "Microeconomics, Macroeconomics & Indian Economy" }
+    ],
+    "arts": [
+      { "icon": "🏛️", "name": "History", "desc": "Ancient, Medieval & Modern Indian History + World History" },
+      { "icon": "⚖️", "name": "Political Science", "desc": "Indian Constitution, Political Theory & International Relations" },
+      { "icon": "🌍", "name": "Geography", "desc": "Physical, Human & Economic Geography + Map Studies" }
+    ]
+  },
+
+  "summer": {
+    "heading": "Summer Admission<br>Now Open!",
+    "subtext": "Enroll your child this summer in our special short-term programs designed to build skills, confidence, and competitive edge.",
+    "programs": [
+      { "icon": "🗣️", "name": "Spoken English", "desc": "Communication & Fluency Building Program" },
+      { "icon": "💻", "name": "Computer Classes", "desc": "Basic to Advanced Computing Skills" },
+      { "icon": "🧘", "name": "Yoga Training", "desc": "Mind-Body Wellness & Stress Management" },
+      { "icon": "🏥", "name": "Health & Medicine Awareness", "desc": "Health Education & Awareness Program" },
+      { "icon": "🎯", "name": "Entrance Coaching – JEE / NEET", "desc": "Intensive Crash Course for Competitive Exams" }
+    ]
+  },
+
+  "faculty": [
+    { "name": "Dr. Rajesh Kumar Mohanty", "subject": "Physics & Mathematics", "experience": "12+ Years", "emoji": "👨‍🏫", "bg": "linear-gradient(135deg,#0A3D62,#27AE60)" },
+    { "name": "Mrs. Pratima Dash", "subject": "Chemistry & Biology", "experience": "9+ Years", "emoji": "👩‍🏫", "bg": "linear-gradient(135deg,#27AE60,#F39C12)" },
+    { "name": "Mr. Subash Chandra Nayak", "subject": "Commerce & Economics", "experience": "11+ Years", "emoji": "👨‍💼", "bg": "linear-gradient(135deg,#F39C12,#0A3D62)" }
+  ],
+
+  "testimonials": [
+    {
+      "stars": 5,
+      "text": "My daughter scored 92% in her board exams after joining MCA. The faculty is incredibly dedicated and the teaching method is completely different from other coaching institutes. The DMIT test helped us understand her true strengths. Highly recommended for every parent in Kendrapara!",
+      "name": "Sunita Rani Sahoo",
+      "role": "Mother of Class 12 Science Student",
+      "initial": "S"
+    },
+    {
+      "stars": 5,
+      "text": "MCA transformed my son completely. Not just academics, but his communication skills, confidence, and discipline improved dramatically. The Spoken English program was a game-changer. The teachers treat every child personally. Best institute in Kendrapara without a doubt!",
+      "name": "Bijaya Kumar Panda",
+      "role": "Father of Class 11 Commerce Student",
+      "initial": "B"
+    },
+    {
+      "stars": 5,
+      "text": "We were unsure which stream to choose for our child. The free career counselling at MCA helped us make the right decision backed by data. The DMIT analysis was eye-opening. One year later, our child is thriving in Arts and loves every subject. Thank you, MCA!",
+      "name": "Mamata Sahu",
+      "role": "Mother of Class 11 Arts Student",
+      "initial": "M"
+    }
+  ],
+
+  "achievements": [
+    { "icon": "👨‍🎓", "num": 500, "suffix": "+", "label": "Students Guided Successfully" },
+    { "icon": "🏆", "num": null, "text": "Top", "label": "Board Results Across All Streams" },
+    { "icon": "📈", "num": 98, "suffix": "%", "label": "High Success Rate" },
+    { "icon": "🎯", "num": 6, "suffix": "+", "label": "Years Career Planning Expertise" }
+  ],
+
+  "gallery": [
+    { "label": "Our Campus", "emoji": "🏫", "file": "", "bg": "linear-gradient(135deg,#0A3D62,#154f7a)" },
+    { "label": "Smart Classroom", "emoji": "🖥️", "file": "", "bg": "linear-gradient(135deg,#27AE60,#1a8a4a)" },
+    { "label": "Students", "emoji": "👨‍🎓", "file": "", "bg": "linear-gradient(135deg,#F39C12,#e67e22)" },
+    { "label": "Events", "emoji": "🎉", "file": "", "bg": "linear-gradient(135deg,#8e44ad,#9b59b6)" }
+  ],
+
+  "cta": {
+    "heading": "Start Your Child's Career Journey Today",
+    "subtext": "Join 500+ students who have already shaped their futures with MCA, Kendrapara.",
+    "btn1": "🎓 Apply for Admission",
+    "btn2": "📋 Book Free Counselling"
+  },
+
+  "contact": {
+    "address": "Maruti Chhaka, Gulnagar, Kendrapara – 754211, Odisha, India",
+    "phone1": "+91 93379 94358",
+    "phone2": "06727-359017",
+    "email": "mca24.edu@gmail.com",
+    "timings": "Monday – Saturday: 10:00 AM – 06:00 PM",
+    "whatsapp": "919337994358",
+    "maps_embed": "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3736.755619380697!2d86.410094!3d20.516241999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjDCsDMwJzU4LjUiTiA4NsKwMjQnMzYuMyJF!5e0!3m2!1sen!2sin!4v1772955091883!5m2!1sen!2sin"
+  },
+
+  "footer": {
+    "about_text": "Premier coaching institute in Kendrapara offering holistic education, career guidance, and character development for Science, Commerce, and Arts students.",
+    "social": {
+      "facebook": "#",
+      "instagram": "#",
+      "youtube": "#",
+      "whatsapp": "https://wa.me/919337994358"
+    }
+  },
+
+  "seo": {
+    "title": "My Career Academic (MCA) – Premier Coaching Institute, Kendrapara, Odisha",
+    "description": "My Career Academic (MCA) – Top coaching institute in Kendrapara, Odisha offering Science, Commerce, Arts coaching, DMIT Test, Spoken English, JEE/NEET entrance coaching.",
+    "keywords": "coaching institute Kendrapara, science commerce arts coaching Odisha, career guidance Kendrapara, MCA Kendrapara, NEET JEE coaching Odisha, DMIT test Kendrapara"
+  },
+
+  "scripts": {
+    "google_sheet_read": "https://script.google.com/macros/s/AKfycbz7GdAe3RikhM3yPpQwN_VKXLGQg_I4mZ0Yx-C5DUHVLRcoKY4CuhIoMoiMuLZhSnz-/exec",
+    "google_sheet_write": "https://script.google.com/macros/s/AKfycbwXPAc2Uz7aI8G6JvXENycGF1Er9Aqb727Nd3vZZXqR3yEQ1cZ2A_8hOeSddffKezib/exec"
+  }
 }
